@@ -3,14 +3,10 @@
 
 set -e
 
-# 環境変数デバッグ情報
-echo "=== Environment Debug Info ==="
+# 環境変数チェック
+echo "=== Starting Rails Application ==="
 echo "RAILS_ENV: $RAILS_ENV"
-echo "SECRET_KEY_BASE: ${SECRET_KEY_BASE:0:20}... (length: ${#SECRET_KEY_BASE})"
-echo "RAILS_MASTER_KEY: ${RAILS_MASTER_KEY:0:10}... (length: ${#RAILS_MASTER_KEY})"
-echo "DATABASE_URL: ${DATABASE_URL:0:30}... (length: ${#DATABASE_URL})"
-echo "DATABASE_PUBLIC_URL: ${DATABASE_PUBLIC_URL:0:30}... (length: ${#DATABASE_PUBLIC_URL})"
-echo "=============================="
+echo "==============================="
 
 # 本番環境での環境変数チェック
 if [ "$RAILS_ENV" = "production" ]; then
@@ -34,12 +30,11 @@ fi
 # 既存のserver.pidを削除
 rm -f /rails/tmp/pids/server.pid
 
-# データベース設定（一時的にスキップ）
-# if [ -f /rails/db/structure.sql ]; then
-#   ./bin/rails db:structure:load
-# else
-#   ./bin/rails db:migrate
-# fi
-echo "Skipping database migration for debugging..."
+# データベース設定
+if [ -f /rails/db/structure.sql ]; then
+  ./bin/rails db:structure:load
+else
+  ./bin/rails db:migrate
+fi
 
 exec "$@"
