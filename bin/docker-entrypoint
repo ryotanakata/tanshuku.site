@@ -10,29 +10,22 @@ echo "SECRET_KEY_BASE: ${SECRET_KEY_BASE:0:20}... (length: ${#SECRET_KEY_BASE})"
 echo "RAILS_MASTER_KEY: ${RAILS_MASTER_KEY:0:10}... (length: ${#RAILS_MASTER_KEY})"
 echo "=============================="
 
-# 本番環境での環境変数チェックとフォールバック
+# 本番環境での環境変数チェック
 if [ "$RAILS_ENV" = "production" ]; then
-  # SECRET_KEY_BASE のチェックとフォールバック
   if [ -z "$SECRET_KEY_BASE" ]; then
-    echo "WARNING: SECRET_KEY_BASE not found in environment variables"
+    echo "ERROR: SECRET_KEY_BASE environment variable is required in production"
+    echo "Please set SECRET_KEY_BASE in Railway variables"
     echo "Available environment variables:"
     env | grep -E "(SECRET|RAILS)" | sort
-    echo "Generating temporary SECRET_KEY_BASE..."
-    export SECRET_KEY_BASE=$(bundle exec rails secret)
-    echo "Generated SECRET_KEY_BASE: ${SECRET_KEY_BASE:0:20}..."
+    exit 1
   fi
   
-  # RAILS_MASTER_KEY のチェックとフォールバック  
   if [ -z "$RAILS_MASTER_KEY" ]; then
-    echo "WARNING: RAILS_MASTER_KEY not found in environment variables"
-    if [ -f /rails/config/master.key ]; then
-      echo "Using master.key file as fallback..."
-      export RAILS_MASTER_KEY=$(cat /rails/config/master.key)
-      echo "Loaded RAILS_MASTER_KEY: ${RAILS_MASTER_KEY:0:10}..."
-    else
-      echo "ERROR: No master.key file found and RAILS_MASTER_KEY not set"
-      exit 1
-    fi
+    echo "ERROR: RAILS_MASTER_KEY environment variable is required in production" 
+    echo "Please set RAILS_MASTER_KEY in Railway variables"
+    echo "Available environment variables:"
+    env | grep -E "(SECRET|RAILS)" | sort
+    exit 1
   fi
 fi
 

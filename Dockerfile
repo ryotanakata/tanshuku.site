@@ -34,9 +34,6 @@ RUN npm ci
 # アプリケーションコードをコピー
 COPY . .
 
-# master.keyを明示的にコピー（Railway環境変数フォールバック用）
-COPY config/master.key /rails/config/master.key
-
 # Bootsnap プリコンパイル
 RUN bundle exec bootsnap precompile app/ lib/
 
