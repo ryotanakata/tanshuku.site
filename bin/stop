@@ -1,0 +1,39 @@
+#!/usr/bin/env sh
+
+echo "🛑 Stopping development servers..."
+
+# PIDファイルからRailsサーバーを停止
+if [ -f tmp/pids/server.pid ]; then
+  echo "📱 Stopping Rails server..."
+  kill $(cat tmp/pids/server.pid) 2>/dev/null || true
+  rm -f tmp/pids/server.pid
+  echo "✅ Rails server stopped"
+else
+  echo "ℹ️  No Rails server PID file found"
+fi
+
+# ポート3000と3036のプロセスを停止
+echo "🔌 Stopping processes on ports 3000 and 3036..."
+
+# ポート3000のプロセスを停止
+PIDS_3000=$(lsof -ti:3000 2>/dev/null)
+if [ ! -z "$PIDS_3000" ]; then
+  echo "📱 Stopping processes on port 3000: $PIDS_3000"
+  echo $PIDS_3000 | xargs kill 2>/dev/null || true
+else
+  echo "ℹ️  No processes on port 3000"
+fi
+
+# ポート3036のプロセスを停止
+PIDS_3036=$(lsof -ti:3036 2>/dev/null)
+if [ ! -z "$PIDS_3036" ]; then
+  echo "⚡ Stopping processes on port 3036: $PIDS_3036"
+  echo $PIDS_3036 | xargs kill 2>/dev/null || true
+else
+  echo "ℹ️  No processes on port 3036"
+fi
+
+echo "✅ All development servers stopped"
+echo ""
+echo "💡 To start again, run: bin/dev"
+echo "💡 To stop in the future, use: Ctrl+C or bin/stop"

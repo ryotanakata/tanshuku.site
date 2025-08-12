@@ -16,9 +16,9 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./app/javascript/*"]
+      "@/*": ["./app/frontend/*"]
     }
   },
-  "include": ["app/javascript/**/*", "app/javascript/**/*.tsx"],
+  "include": ["app/frontend/**/*", "app/frontend/**/*.tsx"],
   "exclude": ["node_modules"]
 }

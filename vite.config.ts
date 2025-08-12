@@ -4,13 +4,26 @@ import RubyPlugin from "vite-plugin-ruby";
 export default defineConfig({
   plugins: [
     RubyPlugin(),
-    react({
-      tsDecorators: true, // TypeScript デコレータサポート
-    }),
   ],
+  server: {
+    host: '0.0.0.0',
+    port: 3036,
+  },
   resolve: {
     alias: {
-      "@": "/app/javascript",
+      "@": "/app/frontend",
+    },
+    extensions: ['.js', '.ts', '.tsx', '.jsx'],
+  },
+  css: {
+    modules: {
+      localsConvention: "camelCase",
+      generateScopedName: "[name]__[local]___[hash:base64:5]",
+    },
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@use "app/frontend/styles/variables.scss" as *;`,
+      },
     },
   },
 });
