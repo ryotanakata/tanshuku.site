@@ -1,10 +1,7 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
-interface Props {
-  title?: string
-}
 
-const App: React.FC<Props> = ({ title = "Rails + Vite + React + TypeScript + SCSS Modules" }) => {
+export default function App ({ title = "Rails + Vite + React + TypeScript + SCSS Modules" }) {
   const [count, setCount] = useState<number>(0)
 
   const handleIncrement = (): void => {
@@ -51,5 +48,3 @@ const App: React.FC<Props> = ({ title = "Rails + Vite + React + TypeScript + SCS
     </div>
   )
 }
-
-export default App
