@@ -51,10 +51,15 @@ RUN apt-get update -qq && \
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails
 
+# 作業ディレクトリを設定
+WORKDIR /rails
+
+# 必要なディレクトリを作成
+RUN mkdir -p log storage tmp db
+
 # セキュリティのため非rootユーザーで実行
 RUN useradd rails --create-home --shell /bin/bash && \
-    mkdir -p log storage tmp && \
-    chown -R rails:rails db log storage tmp
+    chown -R rails:rails /rails
 USER rails:rails
 
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
