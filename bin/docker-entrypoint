@@ -1,0 +1,16 @@
+bash#!/bin/bash
+# bin/docker-entrypoint
+
+set -e
+
+# 既存のserver.pidを削除
+rm -f /rails/tmp/pids/server.pid
+
+# データベース設定
+if [ -f /rails/db/structure.sql ]; then
+  ./bin/rails db:structure:load
+else
+  ./bin/rails db:migrate
+fi
+
+exec "$@"
