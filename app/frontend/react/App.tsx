@@ -1,5 +1,44 @@
 import { useState, useEffect } from 'react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
 import axios from 'axios'
+
+// Zodスキーマの定義
+const urlFormSchema = z.object({
+  url: z
+    .string()
+    .min(1, 'URLを入力してください')
+    .trim()
+    .refine((url) => url.length > 0, 'URLを入力してください')
+    .refine((url) => {
+      try {
+        new URL(url)
+        return true
+      } catch {
+        return false
+      }
+    }, '有効なURLを入力してください')
+    .refine((url) => {
+      try {
+        const parsed = new URL(url)
+        return parsed.protocol === 'http:' || parsed.protocol === 'https:'
+      } catch {
+        return false
+      }
+    }, 'HTTPまたはHTTPSのURLを入力してください')
+    .refine((url) => url.length <= 2048, 'URLが長すぎます（2048文字以内で入力してください）')
+    .refine((url) => {
+      try {
+        const parsed = new URL(url)
+        return parsed.hostname && parsed.hostname.length > 0
+      } catch {
+        return false
+      }
+    }, '有効なドメインを含むURLを入力してください')
+})
+
+type UrlFormData = z.infer<typeof urlFormSchema>
 
 type ShortenedUrl = {
   original_url: string
@@ -9,10 +48,21 @@ type ShortenedUrl = {
 }
 
 export default function App() {
-  const [url, setUrl] = useState<string>('')
   const [shortenedUrl, setShortenedUrl] = useState<ShortenedUrl | null>(null)
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<string>('')
+
+  // React Hook Formの設定
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+    setValue
+  } = useForm<UrlFormData>({
+    resolver: zodResolver(urlFormSchema),
+    mode: 'onChange'
+  })
 
   // axiosの設定とインターセプター
   useEffect(() => {
@@ -65,15 +115,14 @@ export default function App() {
     }
   }, [])
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const onSubmit = async (data: UrlFormData) => {
     setLoading(true)
     setError('')
 
     try {
-      const response = await axios.post('/api/urls', { url })
+      const response = await axios.post('/api/urls', data)
       setShortenedUrl(response.data)
-      setUrl('')
+      reset() // フォームをリセット
     } catch (err: any) {
       if (err.response) {
         // サーバーからのエラーレスポンス
@@ -102,16 +151,26 @@ export default function App() {
   return (
     <div className="container">
       <h1>短縮URLサービス</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="url"
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-          placeholder="短縮したいURLを入力してください"
-          required
-          disabled={loading}
-        />
-        <button type="submit" disabled={loading}>
+
+      <form onSubmit={handleSubmit(onSubmit)} className="url-form">
+        <div className="form-group">
+          <input
+            type="url"
+            {...register('url')}
+            placeholder="短縮したいURLを入力してください"
+            className={errors.url ? 'error' : ''}
+            disabled={loading}
+          />
+          {errors.url && (
+            <span className="error-message">{errors.url.message}</span>
+          )}
+        </div>
+
+        <button
+          type="submit"
+          disabled={loading || isSubmitting}
+          className="submit-btn"
+        >
           {loading ? '処理中...' : '短縮する'}
         </button>
       </form>

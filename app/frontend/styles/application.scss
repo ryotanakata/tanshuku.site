@@ -53,6 +53,79 @@ form {
   margin: $spacing-xl 0;
 }
 
+.url-form {
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+
+    input[type="url"] {
+      padding: $spacing-md;
+      border: 2px solid #e5e7eb;
+      border-radius: 0.5rem;
+      font-size: $font-size-base;
+      transition: border-color 0.2s, box-shadow 0.2s;
+
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      }
+
+      &:disabled {
+        background-color: #f9fafb;
+        cursor: not-allowed;
+      }
+
+      &.error {
+        border-color: $error-color;
+
+        &:focus {
+          box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+      }
+    }
+
+    .error-message {
+      color: $error-color;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-left: $spacing-xs;
+    }
+  }
+
+  .submit-btn {
+    padding: $spacing-md $spacing-lg;
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: $font-size-base;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    align-self: flex-start;
+
+    &:hover:not(:disabled) {
+      background-color: color.adjust($primary-color, $lightness: -10%);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    &:disabled {
+      background-color: #9ca3af;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
 input[type="url"] {
   padding: $spacing-md;
   border: 2px solid #e5e7eb;
