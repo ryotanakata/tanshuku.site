@@ -28,7 +28,16 @@
 !/tmp/storage/
 !/tmp/storage/.keep
 
+# Ignore build artifacts only
 /public/assets
+/public/vite*
+/public/packs
+
+# Keep static HTML files and icons
+!/public/*.html
+!/public/*.txt
+!/public/*.png
+!/public/*.svg
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
@@ -37,12 +46,8 @@
 !/app/assets/builds/.keep
 
 /node_modules
-/public
-
 
 # Vite Ruby
-/public/vite*
-node_modules
 # Vite uses dotenv and suggests to ignore local-only env files. See
 # https://vitejs.dev/guide/env-and-mode.html#env-files
 *.local
