@@ -8,8 +8,8 @@
 - **Frontend**: React 19 + TypeScript
 - **Database**: PostgreSQL 15
 - **Asset Pipeline**: Vite
-- **Styling**: Tailwind CSS + SCSS
-- **Deployment**: Kamal + Docker
+- **Styling**: SCSS
+- **Deployment**: Railway
 
 ## 前提条件
 
