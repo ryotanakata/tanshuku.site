@@ -99,9 +99,6 @@ bin/rails console
 # フロントエンドアセットのビルド
 npm run build
 
-# Tailwind CSSのビルド
-npm run build:css
-
 # Vite開発サーバーの起動
 npm run dev
 ```
