@@ -1,15 +1,33 @@
 class ShortenedUrlValidator
   def self.validate_creation(original_url)
-    # URLの基本バリデーション
-    url_validation = UrlValidator.validate(original_url)
-    return url_validation unless url_validation[:valid]
-
-    # 短縮URL作成に特化したバリデーション
     errors = []
 
-    # URLの長さチェック（極端に長いURLを防ぐ）
-    if original_url.length > 2048
-      errors << 'URLが長すぎます（2048文字以内で入力してください）'
+    # 基本的なURLバリデーション
+    if original_url.blank?
+      errors << 'URLを入力してください'
+    else
+      # URL形式のチェック
+      begin
+        uri = URI.parse(original_url)
+        unless uri.is_a?(URI::HTTP) || uri.is_a?(URI::HTTPS)
+          errors << 'HTTPまたはHTTPSのURLを入力してください'
+        end
+
+        # ホスト名のチェック
+        if uri.hostname.blank?
+          errors << '有効なドメインを含むURLを入力してください'
+        end
+      rescue URI::InvalidURIError
+        errors << '無効なURL形式です'
+      end
+    end
+
+    # 短縮URL作成に特化したバリデーション
+    if original_url.present?
+      # URLの長さチェック（極端に長いURLを防ぐ）
+      if original_url.length > 2048
+        errors << 'URLが長すぎます（2048文字以内で入力してください）'
+      end
     end
 
     if errors.empty?

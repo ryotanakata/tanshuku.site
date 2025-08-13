@@ -1,19 +1,11 @@
 class ShortenedUrlService
   def self.shorten_url(original_url)
-    # バリデーション
-    validation_result = ShortenedUrlValidator.validate_creation(original_url)
-    return { success: false, errors: validation_result[:errors] } unless validation_result[:valid]
-
     # 既存の短縮URLがあるかチェック
     existing_url = ShortenedUrlRepository.find_by_original_url(original_url)
     return { success: true, data: existing_url } if existing_url
 
     # 短縮コードを生成
     short_code = generate_unique_short_code
-
-    # 短縮コードのバリデーション
-    short_code_validation = ShortenedUrlValidator.validate_short_code(short_code)
-    return { success: false, errors: short_code_validation[:errors] } unless short_code_validation[:valid]
 
     # 新しい短縮URLを作成
     shortened_url = ShortenedUrlRepository.create(

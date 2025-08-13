@@ -6,7 +6,13 @@ module Api
 
       original_url = url_params[:url]
 
-      # サービスで短縮URLを作成
+      # バリデーション
+      validation_result = ShortenedUrlValidator.validate_creation(original_url)
+      unless validation_result[:valid]
+        return render json: { errors: validation_result[:errors] }, status: :unprocessable_entity
+      end
+
+      # サービスで短縮URLを作成（バリデーション済み）
       result = ShortenedUrlService.shorten_url(original_url)
 
       if result[:success]
