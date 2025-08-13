@@ -37,6 +37,14 @@ body {
   padding: $spacing-xl;
 }
 
+h1 {
+  text-align: center;
+  color: $primary-color;
+  margin-bottom: $spacing-xl;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
 // Form styles
 form {
   display: flex;
@@ -55,6 +63,11 @@ input[type="url"] {
     outline: none;
     border-color: $primary-color;
   }
+
+  &:disabled {
+    background-color: #f9fafb;
+    cursor: not-allowed;
+  }
 }
 
 button {
@@ -68,9 +81,24 @@ button {
   cursor: pointer;
   transition: background-color 0.2s;
 
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: color.adjust($primary-color, $lightness: -10%);
   }
+
+  &:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+  }
+}
+
+// Error styles
+.error {
+  margin: $spacing-lg 0;
+  padding: $spacing-md;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 0.5rem;
+  color: $error-color;
 }
 
 // Result styles
@@ -81,12 +109,39 @@ button {
   border-radius: 0.5rem;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 
+  h3 {
+    color: $success-color;
+    margin-top: 0;
+    margin-bottom: $spacing-lg;
+  }
+
+  .url-info {
+    p {
+      margin: $spacing-sm 0;
+
+      strong {
+        color: $secondary-color;
+      }
+    }
+  }
+
   a {
     color: $primary-color;
     text-decoration: none;
 
     &:hover {
       text-decoration: underline;
+    }
+  }
+
+  .copy-btn {
+    margin-left: $spacing-sm;
+    padding: $spacing-xs $spacing-sm;
+    background-color: $secondary-color;
+    font-size: 0.875rem;
+
+    &:hover {
+      background-color: color.adjust($secondary-color, $lightness: -10%);
     }
   }
 }
