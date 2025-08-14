@@ -61,7 +61,7 @@ const useFormHooks = () => {
       await new Promise(resolve => setTimeout(resolve, 3000));
       setCopied(false)
     } catch (err) {
-      setCopied(false)
+      console.error(err)
     }
   };
 
