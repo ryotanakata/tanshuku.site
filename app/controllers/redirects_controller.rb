@@ -5,7 +5,7 @@ class RedirectsController < ApplicationController
 
   def show
     short_code = params[:short_code]
-    shortened_url = @shortened_url_service.expand_url(short_code)
+    shortened_url = @shortened_url_service.find_by_short_code(short_code)
 
     if shortened_url
       redirect_to shortened_url.original_url, allow_other_host: true

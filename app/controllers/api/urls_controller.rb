@@ -9,52 +9,43 @@ module Api
     end
 
     def create
-      # デバッグ用ログ
-      Rails.logger.info "Received params: #{params.inspect}"
-
       original_url = url_params[:url]
 
-      # バリデーション（インスタンスメソッドとして呼び出し）
       validation_result = @shortened_url_validator.validate_creation(original_url)
+
       unless validation_result[:valid]
-        return render json: { errors: validation_result[:errors] }, status: :unprocessable_entity
+        return render json: { errors: validation_result[:errors] }, status: :unprocessable_content
       end
 
-      # サービスで短縮URLを作成（バリデーション済み）
-      result = @shortened_url_service.shorten_url(original_url)
+      begin
+        shortened_url = @shortened_url_service.create_shortened_url(original_url)
 
-      if result[:success]
-        shortened_url = result[:data]
         render json: {
           original_url: shortened_url.original_url,
           short_code: shortened_url.short_code,
-          short_url: @shortened_url_service.get_full_short_url(shortened_url.short_code),
+          short_url: @shortened_url_service.build_url(shortened_url.short_code),
           created_at: shortened_url.created_at
         }, status: :created
-      else
-        render json: { errors: result[:errors] }, status: :unprocessable_entity
+      rescue => e
+        Rails.logger.error "API Error: #{e.message}"
+        return render json: { error: e.message }, status: :unprocessable_content
       end
     end
 
     def show
       short_code = params[:id]
-      shortened_url = @shortened_url_service.expand_url(short_code)
+      shortened_url = @shortened_url_service.find_by_short_code(short_code)
 
       if shortened_url
         render json: {
           original_url: shortened_url.original_url,
           short_code: shortened_url.short_code,
-          short_url: @shortened_url_service.get_full_short_url(shortened_url.short_code),
+          short_url: @shortened_url_service.build_url(shortened_url.short_code),
           created_at: shortened_url.created_at
         }
       else
         render json: { error: '短縮URLが見つかりません' }, status: :not_found
       end
-    end
-
-    # デバッグ用のテストエンドポイント
-    def test
-      render json: { message: 'API is working!', timestamp: Time.current }
     end
 
     private
