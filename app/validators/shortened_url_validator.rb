@@ -14,6 +14,10 @@ class ShortenedUrlValidator
         if uri.hostname.blank?
           errors << '有効なドメインを含むURLを入力してください'
         end
+
+        if SiteConfig::BLOCKED_DOMAINS.any? { |domain| uri.hostname&.downcase&.end_with?(domain) }
+          errors << 'このURLは短縮できません'
+        end
       rescue URI::InvalidURIError
         errors << '無効なURL形式です'
       end
@@ -23,22 +27,6 @@ class ShortenedUrlValidator
       if url.length > 2048
         errors << 'URLが長すぎます（2048文字以内で入力してください）'
       end
-    end
-
-    unless errors.empty?
-      raise ValidationError.new(errors)
-    end
-  end
-
-  def validate_short_code!(short_code)
-    errors = []
-
-    if short_code.blank?
-      errors << '短縮コードが生成されていません'
-    elsif short_code.length != 6
-      errors << '短縮コードは6文字である必要があります'
-    elsif !short_code.match?(/^[A-Z0-9]{6}$/)
-      errors << '短縮コードは英数字（大文字）である必要があります'
     end
 
     unless errors.empty?

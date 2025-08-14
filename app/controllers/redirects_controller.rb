@@ -13,13 +13,13 @@ class RedirectsController < ApplicationController
 
   def show
     short_code = params[:short_code]
+    short_code = short_code.chomp('/') if short_code.end_with?('/')
     shortened_url = @shortened_url_service.find_by_short_code(short_code)
 
     if shortened_url
       begin
         ip = request.remote_ip
 
-        # クローラーの場合は特別な処理
         if @crawler_service.search_engine_crawler?(request.user_agent)
           Rails.logger.info "Crawler access to short_code: #{short_code} by #{@crawler_service.identify_crawler(request.user_agent)}"
         end

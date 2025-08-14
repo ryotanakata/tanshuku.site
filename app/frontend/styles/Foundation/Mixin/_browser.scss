@@ -1,0 +1,46 @@
+// ブラウザハック（IE, Edge, Firefox, Safari）
+// -----------------------------------------------------------------
+
+@mixin ie-only {
+  @media screen and (-ms-high-contrast: active),
+    screen and (-ms-high-contrast: none) {
+    @content;
+  }
+}
+
+@mixin edge-only {
+  @supports (-ms-ime-align: auto) {
+    @content;
+  }
+}
+
+@mixin firefox-only {
+  @-moz-document url-prefix() {
+    @content;
+  }
+}
+
+@mixin safari-only {
+  @media not all and (min-resolution: 0.001dpcm) {
+    @supports (-webkit-appearance: none) {
+      @content;
+    }
+  }
+}
+
+// 呼び出し方
+// .foo {
+//     position: sticky;
+//     @include ie-only {
+//         position: static;
+//     }
+//     @include edge-only {
+//         position: absolute;
+//     }
+//     @include firefox-only {
+//         position: fixed;
+//     }
+//     @include safari-only {
+//         position: relative;
+//     }
+// }

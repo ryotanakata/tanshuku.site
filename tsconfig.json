@@ -19,6 +19,6 @@
       "@/*": ["./app/frontend/*"]
     }
   },
-  "include": ["app/frontend/**/*", "app/frontend/**/*.tsx"],
+  "include": ["app/frontend/**/*", "app/frontend/**/*.tsx", "app/frontend/**/*.scss", "app/frontend/types/*.d.ts"],
   "exclude": ["node_modules"]
 }

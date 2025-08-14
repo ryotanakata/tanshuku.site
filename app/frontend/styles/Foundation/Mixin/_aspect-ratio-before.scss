@@ -1,0 +1,33 @@
+// math.div を使用する
+// ----------------------------------------------------------
+@use "sass:math";
+@use "../Variable" as *;
+
+// aspact-ratio-before（疑似要素を使って比率を維持した背景画像を扱いやすくする）
+// -----------------------------------------------------------------
+
+@mixin aspect-ratio-before($width, $height, $image: null) {
+  @if ($image != null) {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("#{$s3CheflyImagePath+$image}");
+  }
+  &::before {
+    content: "";
+    display: block;
+    padding-top: math.percentage(math.div($height, $width));
+  }
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+// 呼び出し方
+
+// .foo {
+//     @include aspect-ratio-before(960, 600);
+// }
+// .foo {
+//     @include aspect-ratio-before(960, 600, #{$s3AdminPath}/example.jpg);
+// }

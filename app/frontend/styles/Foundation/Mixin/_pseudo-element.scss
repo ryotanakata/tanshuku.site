@@ -1,0 +1,30 @@
+// pseudo-element（疑似要素で毎回使用するプロパティを扱いやすくする）
+// -----------------------------------------------------------------
+
+@mixin pseudo-element(
+  $content: "",
+  $display: block,
+  $position: absolute,
+  $top: 0,
+  $left: 0,
+  $width: 100%,
+  $height: 100%
+) {
+  content: $content;
+  display: $display;
+  position: $position;
+  top: $top;
+  left: $left;
+  width: $width;
+  height: $height;
+}
+
+// 呼び出し方
+// .foo {
+//     &::before {
+//       @include pseudo-element;
+//     }
+//     &::after {
+//       @include pseudo-element('foo');
+//     }
+// }
