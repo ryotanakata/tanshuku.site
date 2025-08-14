@@ -1,19 +1,16 @@
 class ShortenedUrlValidator
-  def validate_creation(original_url)
+  def validate_creation!(url)
     errors = []
 
-    # 基本的なURLバリデーション
-    if original_url.blank?
+    if url.blank?
       errors << 'URLを入力してください'
     else
-      # URL形式のチェック
       begin
-        uri = URI.parse(original_url)
+        uri = URI.parse(url)
         unless uri.is_a?(URI::HTTP) || uri.is_a?(URI::HTTPS)
           errors << 'HTTPまたはHTTPSのURLを入力してください'
         end
 
-        # ホスト名のチェック
         if uri.hostname.blank?
           errors << '有効なドメインを含むURLを入力してください'
         end
@@ -22,22 +19,18 @@ class ShortenedUrlValidator
       end
     end
 
-    # 短縮URL作成に特化したバリデーション
-    if original_url.present?
-      # URLの長さチェック（極端に長いURLを防ぐ）
-      if original_url.length > 2048
+    if url.present?
+      if url.length > 2048
         errors << 'URLが長すぎます（2048文字以内で入力してください）'
       end
     end
 
-    if errors.empty?
-      { valid: true, errors: [] }
-    else
-      { valid: false, errors: errors }
+    unless errors.empty?
+      raise ValidationError.new(errors)
     end
   end
 
-  def validate_short_code(short_code)
+  def validate_short_code!(short_code)
     errors = []
 
     if short_code.blank?
@@ -48,10 +41,8 @@ class ShortenedUrlValidator
       errors << '短縮コードは英数字（大文字）である必要があります'
     end
 
-    if errors.empty?
-      { valid: true, errors: [] }
-    else
-      { valid: false, errors: errors }
+    unless errors.empty?
+      raise ValidationError.new(errors)
     end
   end
 end

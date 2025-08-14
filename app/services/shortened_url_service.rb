@@ -14,7 +14,7 @@ class ShortenedUrlService
     )
 
     unless shortened_url.persisted?
-      raise "Failed to create shortened URL: #{shortened_url.errors.full_messages.join(', ')}"
+      raise ShortenedUrlCreationError.new(shortened_url.errors.full_messages)
     end
 
     shortened_url
