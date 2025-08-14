@@ -17,7 +17,7 @@ const Form = () => {
 
   return (
     <section className={styles.form}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <fieldset>
           <legend>URL</legend>
           <div className={styles.input}>
