@@ -1,26 +1,34 @@
 module Api
   class UrlsController < BaseController
+    def initialize(
+      shortened_url_service: ShortenedUrlService.new,
+      shortened_url_validator: ShortenedUrlValidator.new
+    )
+      @shortened_url_service = shortened_url_service
+      @shortened_url_validator = shortened_url_validator
+    end
+
     def create
       # デバッグ用ログ
       Rails.logger.info "Received params: #{params.inspect}"
 
       original_url = url_params[:url]
 
-      # バリデーション
-      validation_result = ShortenedUrlValidator.validate_creation(original_url)
+      # バリデーション（インスタンスメソッドとして呼び出し）
+      validation_result = @shortened_url_validator.validate_creation(original_url)
       unless validation_result[:valid]
         return render json: { errors: validation_result[:errors] }, status: :unprocessable_entity
       end
 
       # サービスで短縮URLを作成（バリデーション済み）
-      result = ShortenedUrlService.shorten_url(original_url)
+      result = @shortened_url_service.shorten_url(original_url)
 
       if result[:success]
         shortened_url = result[:data]
         render json: {
           original_url: shortened_url.original_url,
           short_code: shortened_url.short_code,
-          short_url: ShortenedUrlService.get_full_short_url(shortened_url.short_code),
+          short_url: @shortened_url_service.get_full_short_url(shortened_url.short_code),
           created_at: shortened_url.created_at
         }, status: :created
       else
@@ -30,13 +38,13 @@ module Api
 
     def show
       short_code = params[:id]
-      shortened_url = ShortenedUrlService.expand_url(short_code)
+      shortened_url = @shortened_url_service.expand_url(short_code)
 
       if shortened_url
         render json: {
           original_url: shortened_url.original_url,
           short_code: shortened_url.short_code,
-          short_url: ShortenedUrlService.get_full_short_url(shortened_url.short_code),
+          short_url: @shortened_url_service.get_full_short_url(shortened_url.short_code),
           created_at: shortened_url.created_at
         }
       else

@@ -1,5 +1,5 @@
 class ShortenedUrlValidator
-  def self.validate_creation(original_url)
+  def validate_creation(original_url)
     errors = []
 
     # 基本的なURLバリデーション
@@ -37,7 +37,7 @@ class ShortenedUrlValidator
     end
   end
 
-  def self.validate_short_code(short_code)
+  def validate_short_code(short_code)
     errors = []
 
     if short_code.blank?
