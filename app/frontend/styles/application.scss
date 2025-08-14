@@ -20,21 +20,6 @@ $spacing-md: 1rem;
 $spacing-lg: 1.5rem;
 $spacing-xl: 2rem;
 
-// Breakpoints
-$breakpoint-sm: 640px;
-$breakpoint-md: 768px;
-$breakpoint-lg: 1024px;
-$breakpoint-xl: 1280px;
-
-// Z-index
-$z-dropdown: 1000;
-$z-sticky: 1020;
-$z-fixed: 1030;
-$z-modal-backdrop: 1040;
-$z-modal: 1050;
-$z-popover: 1060;
-$z-tooltip: 1070;
-
 // Basic layout styles
 body {
   font-family: $font-family-base;
@@ -45,162 +30,191 @@ body {
   background-color: #f3f4f6;
 }
 
-// Utility classes
-.p-6 { padding: $spacing-lg; }
-.max-w-4xl { max-width: 56rem; }
-.mx-auto { margin-left: auto; margin-right: auto; }
-.space-y-6 > * + * { margin-top: $spacing-lg; }
-.text-3xl { font-size: 1.875rem; }
-.font-bold { font-weight: 700; }
-.text-center { text-align: center; }
-.mb-8 { margin-bottom: $spacing-xl; }
-.text-xl { font-size: 1.25rem; }
-.font-semibold { font-weight: 600; }
-.mb-4 { margin-bottom: $spacing-lg; }
-.text-lg { font-size: 1.125rem; }
-.text-gray-600 { color: #6b7280; }
-.flex { display: flex; }
-.flex-wrap { flex-wrap: wrap; }
-.gap-4 { gap: $spacing-lg; }
+// Container styles
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: $spacing-xl;
+}
 
-// Card styles
-.bg-white { background-color: white; }
-.rounded-lg { border-radius: 0.5rem; }
-.shadow-md { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
-
-// Custom components
-.btn {
-  display: inline-block;
-  padding: $spacing-sm $spacing-md;
-  border-radius: 0.375rem;
-  font-weight: 500;
-  text-decoration: none;
+h1 {
   text-align: center;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  border: none;
-  font-size: $font-size-base;
-  line-height: $line-height-base;
+  color: $primary-color;
+  margin-bottom: $spacing-xl;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
 
-  // Primary variant
-  &.primary {
-    background-color: $primary-color;
-    color: white;
+// Form styles
+form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  margin: $spacing-xl 0;
+}
 
-    &:hover {
-      background-color: color.adjust($primary-color, $lightness: -10%);
+.url-form {
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+
+    input[type="url"] {
+      padding: $spacing-md;
+      border: 2px solid #e5e7eb;
+      border-radius: 0.5rem;
+      font-size: $font-size-base;
+      transition: border-color 0.2s, box-shadow 0.2s;
+
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      }
+
+      &:disabled {
+        background-color: #f9fafb;
+        cursor: not-allowed;
+      }
+
+      &.error {
+        border-color: $error-color;
+
+        &:focus {
+          box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+      }
     }
 
-    &:focus {
-      outline: 2px solid $primary-color;
-      outline-offset: 2px;
-    }
-
-    &:disabled {
-      background-color: color.adjust($primary-color, $lightness: 20%);
-      cursor: not-allowed;
+    .error-message {
+      color: $error-color;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-left: $spacing-xs;
     }
   }
 
-  // Secondary variant
-  &.secondary {
-    background-color: $secondary-color;
+  .submit-btn {
+    padding: $spacing-md $spacing-lg;
+    background-color: $primary-color;
     color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: $font-size-base;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    align-self: flex-start;
+
+    &:hover:not(:disabled) {
+      background-color: color.adjust($primary-color, $lightness: -10%);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    &:disabled {
+      background-color: #9ca3af;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+input[type="url"] {
+  padding: $spacing-md;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.5rem;
+  font-size: $font-size-base;
+
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+  }
+
+  &:disabled {
+    background-color: #f9fafb;
+    cursor: not-allowed;
+  }
+}
+
+button {
+  padding: $spacing-md $spacing-lg;
+  background-color: $primary-color;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: $font-size-base;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover:not(:disabled) {
+    background-color: color.adjust($primary-color, $lightness: -10%);
+  }
+
+  &:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+  }
+}
+
+// Error styles
+.error {
+  margin: $spacing-lg 0;
+  padding: $spacing-md;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 0.5rem;
+  color: $error-color;
+}
+
+// Result styles
+.result {
+  margin-top: $spacing-xl;
+  padding: $spacing-lg;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+
+  h3 {
+    color: $success-color;
+    margin-top: 0;
+    margin-bottom: $spacing-lg;
+  }
+
+  .url-info {
+    p {
+      margin: $spacing-sm 0;
+
+      strong {
+        color: $secondary-color;
+      }
+    }
+  }
+
+  a {
+    color: $primary-color;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .copy-btn {
+    margin-left: $spacing-sm;
+    padding: $spacing-xs $spacing-sm;
+    background-color: $secondary-color;
+    font-size: 0.875rem;
 
     &:hover {
       background-color: color.adjust($secondary-color, $lightness: -10%);
     }
-
-    &:focus {
-      outline: 2px solid $secondary-color;
-      outline-offset: 2px;
-    }
-  }
-
-  // Success variant
-  &.success {
-    background-color: $success-color;
-    color: white;
-
-    &:hover {
-      background-color: color.adjust($success-color, $lightness: -10%);
-    }
-
-    &:focus {
-      outline: 2px solid $success-color;
-      outline-offset: 2px;
-    }
-  }
-
-  // Danger variant
-  &.danger {
-    background-color: $error-color;
-    color: white;
-
-    &:hover {
-      background-color: color.adjust($error-color, $lightness: -10%);
-    }
-
-    &:focus {
-      outline: 2px solid $error-color;
-      outline-offset: 2px;
-    }
-  }
-
-  // Size variants
-  &.small {
-    padding: $spacing-xs $spacing-sm;
-    font-size: 0.875rem;
-  }
-
-  &.large {
-    padding: $spacing-md $spacing-lg;
-    font-size: 1.125rem;
-  }
-
-  // State variants
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
-  // Loading state
-  &.loading {
-    position: relative;
-
-    &::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-color: rgba(255, 255, 255, 0.2);
-      border-radius: 0.375rem;
-    }
-  }
-}
-
-// Custom utilities
-.text-gradient {
-  background: linear-gradient(135deg, $primary-color, $accent-color);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-// Responsive mixins
-@mixin mobile {
-  @media (max-width: $breakpoint-md) {
-    @content;
-  }
-}
-
-@mixin tablet {
-  @media (min-width: #{$breakpoint-md + 1px}) and (max-width: $breakpoint-lg) {
-    @content;
-  }
-}
-
-@mixin desktop {
-  @media (min-width: #{$breakpoint-lg + 1px}) {
-    @content;
   }
 }

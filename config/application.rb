@@ -25,15 +25,15 @@ module TanshukuSite
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
-    # Common ones are `templates`, `generators`, or `middleware`, for example.
-    config.autoload_lib(ignore: %w[assets tasks])
+    # Common ones are `templates`, `channels`, and `assets`, though it's
+    # okay if you remove these.
+    #
+    # config.autoload_lib(ignore: %w(assets tasks))
 
-    # Configuration for the application, engines, and railties goes here.
-    #
-    # These settings can be overridden in specific environments using the files
-    # in config/environments/, which are processed later.
-    #
-    # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("ext")
+    # Add autoload paths
+    config.autoload_paths << Rails.root.join('app', 'middleware')
+
+    # Base URL for short URLs
+    config.base_url = ENV.fetch('BASE_URL', 'http://localhost:3000')
   end
 end

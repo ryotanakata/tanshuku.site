@@ -1,8 +1,12 @@
 {
   "type": "module",
   "dependencies": {
+    "@hookform/resolvers": "^5.2.1",
+    "axios": "^1.11.0",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "react-hook-form": "^7.62.0",
+    "zod": "^4.0.17"
   },
   "devDependencies": {
     "@types/node": "^24.2.1",
@@ -16,7 +20,6 @@
   },
   "scripts": {
     "build": "vite build",
-    "build:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/tailwind.css",
     "dev": "vite"
   }
 }
