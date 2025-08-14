@@ -14,6 +14,10 @@ class ShortenedUrlValidator
         if uri.hostname.blank?
           errors << '有効なドメインを含むURLを入力してください'
         end
+
+        if SiteConfig::BLOCKED_DOMAINS.any? { |domain| uri.hostname&.downcase&.end_with?(domain) }
+          errors << 'このURLは短縮できません'
+        end
       rescue URI::InvalidURIError
         errors << '無効なURL形式です'
       end
