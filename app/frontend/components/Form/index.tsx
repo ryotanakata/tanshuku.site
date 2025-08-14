@@ -12,8 +12,31 @@ const Form = () => {
     copyToClipboard,
     url,
     loading,
-    error,
+    copied,
+    generated
   } = useFormHooks();
+
+  const renderOutputContent = () => {
+    if (!url) return null;
+
+    switch (true) {
+      case copied: return <span>コピーが完了しました 🎉</span>;
+      case generated: return <span>短縮URLが生成されました 🎉</span>;
+      default:
+        return (
+          <>
+            <a href={url.short_url} target="_blank" rel="noopener noreferrer">
+              {url.short_url}
+            </a>
+            <button onClick={copyToClipboard} aria-label="コピーする">
+              <span className="material-icons-round" aria-hidden="true">
+                content_copy
+              </span>
+            </button>
+          </>
+        );
+    }
+  };
 
   return (
     <section className={styles.form}>
@@ -22,10 +45,12 @@ const Form = () => {
           <legend>URL</legend>
           <div className={styles.input}>
             <input
+              id="url"
               type="url"
-              placeholder="URLを入力してください"
+              placeholder="https://example.com/long....."
               aria-invalid={errors.url ? 'true' : 'false'}
               disabled={loading}
+              autoFocus={true}
               {...register('url')}
             />
             <button
@@ -34,7 +59,7 @@ const Form = () => {
               aria-label="入力内容をクリア"
               disabled={!watch('url')}
             >
-              <span className="material-icons-round">
+              <span className="material-icons-round" aria-hidden="true">
                 close
               </span>
             </button>
@@ -42,43 +67,16 @@ const Form = () => {
           {errors.url && (
             <span>{errors.url.message}</span>
           )}
-      </fieldset>
-        {/* <div className={styles.button}>
-          <button
-            type="button"
-            disabled={loading || isSubmitting || !url}
-          >
-            {loading ? '処理中...' : '短縮する'}
-          </button>
-        </div> */}
-      </form>
+        </fieldset>
 
-      {error && (
-        <div className="error">
-          <p>{error}</p>
-        </div>
-      )}
-
-      {url && (
-        <div className="result">
-          <h3>短縮完了！</h3>
-          <div className="url-info">
-            <p><strong>元のURL:</strong> {url.original_url}</p>
-            <p><strong>短縮URL:</strong>
-              <a href={url.short_url} target="_blank" rel="noopener noreferrer">
-                {url.short_url}
-              </a>
-              <button
-                onClick={() => copyToClipboard(url.short_url)}
-                className="copy-btn"
-              >
-                コピー
-              </button>
-            </p>
-            <p><strong>作成日時:</strong> {new Date(url.created_at).toLocaleString('ja-JP')}</p>
+        {url && (
+          <div className={styles.output}>
+            <output htmlFor="url">
+              {renderOutputContent()}
+            </output>
           </div>
-        </div>
-      )}
+        )}
+      </form>
     </section>
   )
 }

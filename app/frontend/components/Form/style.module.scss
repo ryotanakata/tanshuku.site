@@ -2,9 +2,7 @@
 @use "@/styles/Foundation" as *;
 
 .form {
-  fieldset {
-    padding-block: 5%;
-  }
+  padding-block-start: 7.5%;
   legend {
     @include visually-hidden();
   }
@@ -41,18 +39,67 @@
       padding-inline: 5px;
     }
   }
-  .button {
-    padding-block: 15%;
+  .output {
+    margin-block-start: 7.5%;
+    text-align: center;
+    output {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      & > span {
+        font-size: clamp-calc-vw(11px,375, 768, 13px);
+        color: var(--b-color-primary-default);
+      }
+    }
+
+    a {
+      font-size: clamp-calc-vw(12px,375, 768, 14px);
+      color: var(--b-color-primary-default);
+      padding-inline: 5px;
+      padding-block-end: 2px;
+      overflow: hidden;
+      position: relative;
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        display: block;
+        width: 100%;
+        height: 2px;
+        background-color: var(--b-color-primary-default);
+        transform: scaleX(0);
+        transform-origin: left;
+        animation: underline-slide 3s infinite ease-in-out;
+      }
+
+      @keyframes underline-slide {
+        0% {
+          transform: scaleX(0);
+          transform-origin: left;
+        }
+        30% {
+          transform: scaleX(1);
+          transform-origin: left;
+        }
+        35% {
+          transform-origin: right;
+        }
+        65% {
+          transform: scaleX(0);
+          transform-origin: right;
+        }
+        100% {
+          transform: scaleX(0);
+          transform-origin: right;
+        }
+      }
+    }
+
     button {
-      width: 100%;
-      padding: 15px;
-      font-size: 16px;
-      border-radius: 10px;
-      background-color: var(--b-color-primary-default);
-      color: var(--b-color-white-default);
-      cursor: pointer;
-      &:disabled {
-        background-color: var(--b-color-gray-light);
+      color: var(--b-color-primary-default);
+      span {
+        font-size: clamp-calc-vw(15px,375, 768, 19px);
       }
     }
   }
