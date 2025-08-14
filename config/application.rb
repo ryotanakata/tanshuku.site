@@ -30,13 +30,8 @@ module TanshukuSite
     #
     # config.autoload_lib(ignore: %w(assets tasks))
 
-    # Configuration for the application, engines, and railties goes here.
-    #
-    # These settings can be overridden in specific environments using files
-    # in config/environments/, which are processed later.
-    #
-    # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
+    # Add autoload paths
+    config.autoload_paths << Rails.root.join('app', 'middleware')
 
     # Base URL for short URLs
     config.base_url = ENV.fetch('BASE_URL', 'http://localhost:3000')
