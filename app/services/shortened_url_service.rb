@@ -4,6 +4,7 @@ class ShortenedUrlService
   end
 
   def create_shortened_url(url)
+    url = url.chomp('/') if url.end_with?('/')
     existing_url = @shortened_url_repository.find_by_original_url(url)
     return existing_url if existing_url
 
