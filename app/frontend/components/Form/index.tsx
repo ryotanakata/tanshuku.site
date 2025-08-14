@@ -16,7 +16,7 @@ const Form = () => {
   } = useFormHooks();
 
   return (
-    <div className={styles.form}>
+    <section className={styles.form}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <fieldset>
           <legend>URL</legend>
@@ -79,7 +79,7 @@ const Form = () => {
           </div>
         </div>
       )}
-    </div>
+    </section>
   )
 }
 
