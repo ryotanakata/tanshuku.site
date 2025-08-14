@@ -12,10 +12,31 @@ const Form = () => {
     copyToClipboard,
     url,
     loading,
-    copied
+    copied,
+    generated
   } = useFormHooks();
 
+  const renderOutputContent = () => {
+    if (!url) return null;
 
+    switch (true) {
+      case copied: return <span>コピーが完了しました 🎉</span>;
+      case generated: return <span>短縮URLが生成されました 🎉</span>;
+      default:
+        return (
+          <>
+            <a href={url.short_url} target="_blank" rel="noopener noreferrer">
+              {url.short_url}
+            </a>
+            <button onClick={copyToClipboard} aria-label="コピーする">
+              <span className="material-icons-round" aria-hidden="true">
+                content_copy
+              </span>
+            </button>
+          </>
+        );
+    }
+  };
 
   return (
     <section className={styles.form}>
@@ -38,7 +59,7 @@ const Form = () => {
               aria-label="入力内容をクリア"
               disabled={!watch('url')}
             >
-              <span className="material-icons-round">
+              <span className="material-icons-round" aria-hidden="true">
                 close
               </span>
             </button>
@@ -51,22 +72,7 @@ const Form = () => {
         {url && (
           <div className={styles.output}>
             <output htmlFor="url">
-              🎉
-              {copied ? (
-                <span>コピーが完了しました！</span>
-              ) : (
-                <a href={url.short_url} target="_blank" rel="noopener noreferrer">
-                  {url.short_url}
-                </a>
-              )}
-              <button
-                onClick={copyToClipboard}
-                aria-label="コピーする"
-              >
-                <span className="material-icons-round">
-                  content_copy
-                </span>
-              </button>
+              {renderOutputContent()}
             </output>
           </div>
         )}

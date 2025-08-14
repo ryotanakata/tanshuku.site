@@ -12,6 +12,7 @@ const useFormHooks = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   const [copied, setCopied] = useState(false);
+  const [generated, setGenerated] = useState(false);
 
   const {
     register,
@@ -37,6 +38,9 @@ const useFormHooks = () => {
     try {
       const response = await axios.post('/api/urls', data)
       setUrl(response.data)
+      setGenerated(true)
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      setGenerated(false)
     } catch (err: any) {
       if (err.response) {
         setError(err.response.data.error || '短縮URLの作成に失敗しました')
@@ -75,6 +79,7 @@ const useFormHooks = () => {
     loading,
     error,
     copied,
+    generated
   };
 }
 
