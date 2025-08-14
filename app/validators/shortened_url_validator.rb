@@ -33,20 +33,4 @@ class ShortenedUrlValidator
       raise ValidationError.new(errors)
     end
   end
-
-  def validate_short_code!(short_code)
-    errors = []
-
-    if short_code.blank?
-      errors << '短縮コードが生成されていません'
-    elsif short_code.length != 6
-      errors << '短縮コードは6文字である必要があります'
-    elsif !short_code.match?(/^[A-Z0-9]{6}$/)
-      errors << '短縮コードは英数字（大文字）である必要があります'
-    end
-
-    unless errors.empty?
-      raise ValidationError.new(errors)
-    end
-  end
 end
