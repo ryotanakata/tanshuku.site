@@ -12,8 +12,10 @@ const Form = () => {
     copyToClipboard,
     url,
     loading,
-    error,
+    copied
   } = useFormHooks();
+
+
 
   return (
     <section className={styles.form}>
@@ -22,10 +24,12 @@ const Form = () => {
           <legend>URL</legend>
           <div className={styles.input}>
             <input
+              id="url"
               type="url"
-              placeholder="URLを入力してください"
+              placeholder="https://example.com/long....."
               aria-invalid={errors.url ? 'true' : 'false'}
               disabled={loading}
+              autoFocus={true}
               {...register('url')}
             />
             <button
@@ -42,43 +46,31 @@ const Form = () => {
           {errors.url && (
             <span>{errors.url.message}</span>
           )}
-      </fieldset>
-        {/* <div className={styles.button}>
-          <button
-            type="button"
-            disabled={loading || isSubmitting || !url}
-          >
-            {loading ? '処理中...' : '短縮する'}
-          </button>
-        </div> */}
-      </form>
+        </fieldset>
 
-      {error && (
-        <div className="error">
-          <p>{error}</p>
-        </div>
-      )}
-
-      {url && (
-        <div className="result">
-          <h3>短縮完了！</h3>
-          <div className="url-info">
-            <p><strong>元のURL:</strong> {url.original_url}</p>
-            <p><strong>短縮URL:</strong>
-              <a href={url.short_url} target="_blank" rel="noopener noreferrer">
-                {url.short_url}
-              </a>
+        {url && (
+          <div className={styles.output}>
+            <output htmlFor="url">
+              🎉
+              {copied ? (
+                <span>コピーが完了しました！</span>
+              ) : (
+                <a href={url.short_url} target="_blank" rel="noopener noreferrer">
+                  {url.short_url}
+                </a>
+              )}
               <button
-                onClick={() => copyToClipboard(url.short_url)}
-                className="copy-btn"
+                onClick={copyToClipboard}
+                aria-label="コピーする"
               >
-                コピー
+                <span className="material-icons-round">
+                  content_copy
+                </span>
               </button>
-            </p>
-            <p><strong>作成日時:</strong> {new Date(url.created_at).toLocaleString('ja-JP')}</p>
+            </output>
           </div>
-        </div>
-      )}
+        )}
+      </form>
     </section>
   )
 }

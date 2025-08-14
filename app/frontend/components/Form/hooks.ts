@@ -11,6 +11,7 @@ const useFormHooks = () => {
   const [url, setUrl] = useState<Url | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
+  const [copied, setCopied] = useState(false);
 
   const {
     register,
@@ -36,7 +37,6 @@ const useFormHooks = () => {
     try {
       const response = await axios.post('/api/urls', data)
       setUrl(response.data)
-      reset()
     } catch (err: any) {
       if (err.response) {
         setError(err.response.data.error || '短縮URLの作成に失敗しました')
@@ -50,14 +50,17 @@ const useFormHooks = () => {
     }
   };
 
-  const copyToClipboard = async (text: string) => {
+  const copyToClipboard = async () => {
     try {
-      await navigator.clipboard.writeText(text)
-      alert('クリップボードにコピーしました！')
+      await navigator.clipboard.writeText(url?.short_url || '')
+      setCopied(true)
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      setCopied(false)
     } catch (err) {
-      alert('コピーに失敗しました')
+      setCopied(false)
     }
   };
+
 
   return {
     register,
@@ -71,6 +74,7 @@ const useFormHooks = () => {
     url,
     loading,
     error,
+    copied,
   };
 }
 
