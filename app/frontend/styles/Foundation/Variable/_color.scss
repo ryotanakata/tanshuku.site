@@ -1,0 +1,59 @@
+:root,
+:root[data-theme="default"] {
+  /*-----------------------------------
+    primary / secondary / tertiary ...
+  -----------------------------------*/
+  --b-color-primary-default: #04345A;
+  --b-color-primary-default-rgb: 4, 52, 90;
+  --b-color-secondary-default: #0d0d0d;
+  --b-color-secondary-default-rgb: 13, 13, 13;
+  --b-color-tertiary-default: #F5F7F8;
+  --b-color-tertiary-default-rgb: 245, 247, 248;
+  --b-color-fourth-default: #f7f2f2;
+  --b-color-fourth-default-rgb: 247, 242, 242;
+  --b-color-fifth-default: #f9c3aa;
+  --b-color-fifth-default-rgb: 249, 195, 170;
+
+  /*-----------------------------------
+    basic color
+  -----------------------------------*/
+  --b-color-white-default: #ffffff;
+  --b-color-white-default-rgb: 255, 255, 255;
+  --b-color-gray-light: #cccccc;
+  --b-color-gray-light-rgb: 204, 204, 204;
+  --b-color-gray-default: #999999;
+  --b-color-gray-default-rgb: 153, 153, 153;
+  --b-color-gray-dark: #808080;
+  --b-color-gray-dark-rgb: 128, 128, 128;
+  --b-color-black-default: #000000;
+  --b-color-black-default-rgb: 0, 0, 0;
+  --b-color-red-default: #ff4545;
+  --b-color-red-default-rgb: 255, 69, 69;
+
+  /*-----------------------------------
+    gradient
+  -----------------------------------*/
+  --b-color-gradient-default: linear-gradient(
+    24.28deg,
+    rgba(249, 195, 170, 1) 0%,
+    rgba(246, 168, 131, 1) 11.2%,
+    rgba(244, 140, 91, 1) 24.61%,
+    rgba(242, 117, 58, 1) 38.47%,
+    rgba(240, 100, 32, 1) 52.64%,
+    rgba(239, 87, 14, 1) 67.28%,
+    rgba(238, 79, 4, 1) 82.66%,
+    rgba(238, 77, 0, 1) 100%
+  );
+
+  /*-----------------------------------
+    feature color
+  -----------------------------------*/
+  --b-color-heatmap-zero: #ffffff;
+  --b-color-heatmap-zero-rgb: 255, 255, 255;
+  --b-color-heatmap-once: #f9c3aa;
+  --b-color-heatmap-once-rgb: 249, 195, 170;
+  --b-color-heatmap-twice: #f38855;
+  --b-color-heatmap-twice-rgb: 243, 136, 85;
+  --b-color-heatmap-threeTimes: #ee4d00;
+  --b-color-heatmap-threeTimes-rgb: 238, 77, 0;
+}

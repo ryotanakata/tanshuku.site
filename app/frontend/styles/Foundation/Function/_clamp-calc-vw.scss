@@ -1,0 +1,39 @@
+// math.div と　　strip-unit を使用する
+// ----------------------------------------------------------
+@use "sass:math";
+@use "strip-unit" as *;
+
+// clamp-calc-vw（clamp関数の推奨値を計算する）
+// -----------------------------------------------------------------
+
+@function clamp-calc-vw(
+  $minFontSize,
+  $targetMinWidth,
+  $targetMaxWidth,
+  $maxFontSize: null
+) {
+  $minFontSize: strip-unit($minFontSize);
+  $maxFontSize: strip-unit($maxFontSize);
+  $targetMinWidth: strip-unit($targetMinWidth);
+  $targetMaxWidth: strip-unit($targetMaxWidth);
+
+  $fontVwSize: math.div(
+    round(math.div($minFontSize, $targetMinWidth) * 100 * 1000),
+    1000
+  );
+  // $value: (strip-unit($px) / strip-unit($base)) * 100vw;
+  @if ($maxFontSize == null) {
+    $maxFontSize: round($targetMaxWidth * math.div($fontVwSize, 100));
+  }
+
+  @return clamp(
+    #{$minFontSize + "px"},
+    #{$fontVwSize + "vw"},
+    #{$maxFontSize + "px"}
+  );
+}
+
+// 呼び出し方
+// .foo {
+//     font-size: clamp-calc-vw(10px, 320, 1180, 50px);
+// }

@@ -1,0 +1,15 @@
+// Variableを使用する
+// ----------------------------------------------------------
+@use "../Variable" as *;
+
+// bg-img-path（背景画像を使用する際にパスを扱いやすくする）
+// -----------------------------------------------------------------
+
+@mixin bg-image-path($path, $fileName) {
+  background-image: url("#{i$magePath+$path+$fileName}");
+}
+
+// 呼び出し方
+// .foo {
+//      @include bg-imgamge-path(foo/foo/, example.jpg);
+// }

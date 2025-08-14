@@ -1,0 +1,172 @@
+// use [Object/Utility]
+// ----------------------------------------------------------
+@use "../../Foundation" as *;
+
+.u-overflow {
+  &--auto {
+    overflow: auto;
+  }
+  &--visible {
+    overflow: visible;
+  }
+  &--hidden {
+    overflow: hidden;
+  }
+  &--scroll {
+    overflow: scroll;
+  }
+  &-xxs {
+    &--auto {
+      @include media-size("xxs") {
+        overflow: auto;
+      }
+    }
+    &--visible {
+      @include media-size("xxs") {
+        overflow: visible;
+      }
+    }
+    &--hidden {
+      @include media-size("xxs") {
+        overflow: hidden;
+      }
+    }
+    &--scroll {
+      @include media-size("xxs") {
+        overflow: scroll;
+      }
+    }
+  }
+  &-xs {
+    &--auto {
+      @include media-size("xs") {
+        overflow: auto;
+      }
+    }
+    &--visible {
+      @include media-size("xs") {
+        overflow: visible;
+      }
+    }
+    &--hidden {
+      @include media-size("xs") {
+        overflow: hidden;
+      }
+    }
+    &--scroll {
+      @include media-size("xs") {
+        overflow: scroll;
+      }
+    }
+  }
+  &-s {
+    &--auto {
+      @include media-size("s") {
+        overflow: auto;
+      }
+    }
+    &--visible {
+      @include media-size("s") {
+        overflow: visible;
+      }
+    }
+    &--hidden {
+      @include media-size("s") {
+        overflow: hidden;
+      }
+    }
+    &--scroll {
+      @include media-size("s") {
+        overflow: scroll;
+      }
+    }
+  }
+  &-m {
+    &--auto {
+      @include media-size("m") {
+        overflow: auto;
+      }
+    }
+    &--visible {
+      @include media-size("m") {
+        overflow: visible;
+      }
+    }
+    &--hidden {
+      @include media-size("m") {
+        overflow: hidden;
+      }
+    }
+    &--scroll {
+      @include media-size("m") {
+        overflow: scroll;
+      }
+    }
+  }
+  &-l {
+    &--auto {
+      @include media-size("l") {
+        overflow: auto;
+      }
+    }
+    &--visible {
+      @include media-size("l") {
+        overflow: visible;
+      }
+    }
+    &--hidden {
+      @include media-size("l") {
+        overflow: hidden;
+      }
+    }
+    &--scroll {
+      @include media-size("l") {
+        overflow: scroll;
+      }
+    }
+  }
+  &-xl {
+    &--auto {
+      @include media-size("xl") {
+        overflow: auto;
+      }
+    }
+    &--visible {
+      @include media-size("xl") {
+        overflow: visible;
+      }
+    }
+    &--hidden {
+      @include media-size("xl") {
+        overflow: hidden;
+      }
+    }
+    &--scroll {
+      @include media-size("xl") {
+        overflow: scroll;
+      }
+    }
+  }
+  &-xxl {
+    &--auto {
+      @include media-size("xxl") {
+        overflow: auto;
+      }
+    }
+    &--visible {
+      @include media-size("xxl") {
+        overflow: visible;
+      }
+    }
+    &--hidden {
+      @include media-size("xxl") {
+        overflow: hidden;
+      }
+    }
+    &--scroll {
+      @include media-size("xxl") {
+        overflow: scroll;
+      }
+    }
+  }
+}

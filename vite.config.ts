@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import RubyPlugin from "vite-plugin-ruby";
+import path from "path";
 
 export default defineConfig({
   plugins: [
@@ -11,19 +12,14 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "@": "/app/frontend",
+      "@": path.resolve(__dirname, "./app/frontend"),
     },
     extensions: ['.js', '.ts', '.tsx', '.jsx'],
   },
   css: {
     modules: {
       localsConvention: "camelCase",
-      generateScopedName: "[name]__[local]___[hash:base64:5]",
-    },
-    preprocessorOptions: {
-      scss: {
-        additionalData: `@use "app/frontend/styles/variables.scss" as *;`,
-      },
+      generateScopedName: "style_[local]__[hash:base64:5]",
     },
   },
 });

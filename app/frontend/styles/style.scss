@@ -1,0 +1,74 @@
+@use "Foundation/reset";
+@use "Foundation/Variable/color";
+@use "Foundation";
+@use "Object";
+
+//
+// Fonts　 (Google Fonts) 英数字は Roboto 日本語は Noto Sans JP
+// ----------------------------------------------------------
+html {
+  @view-transition {
+    navigation: auto;
+  }
+
+  &::view-transition-old(root) {
+    animation: 0.25s anime-root-fade-out both;
+  }
+  &::view-transition-new(root) {
+    animation: 0.25s anime-root-fade-in both;
+  }
+
+  @keyframes anime-root-fade-out {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  @keyframes anime-root-fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &::view-transition-old(root),
+    &::view-transition-new(root) {
+      animation: none;
+    }
+  }
+}
+
+body {
+  font-family: "Roboto", "Noto Sans JP", sans-serif;
+  font-size: inherit;
+  font-feature-settings: "palt" 1;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  min-height: 100vh;
+  min-height: 100dvh;
+  max-height: 100vh;
+  max-height: 100dvh;
+  overflow: hidden;
+  background-color: var(--b-color-white-default);
+  background-image:
+    linear-gradient(0deg, transparent calc(100% - 1px), var(--b-color-tertiary-default) calc(100% - 1px)),
+    linear-gradient(90deg, transparent calc(100% - 1px), var(--b-color-tertiary-default) calc(100% - 1px));
+  background-repeat: repeat;
+  background-position: center;
+  background-size: 16px 16px;
+  button:disabled {
+    cursor: not-allowed;
+  }
+}
+main {
+  width: min(88%, 500px);
+  margin-inline: auto;
+  & > div {
+    padding-block: 15%;
+  }
+}

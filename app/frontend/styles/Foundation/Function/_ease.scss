@@ -1,0 +1,22 @@
+// map.get　と Variableを使用する
+// ----------------------------------------------------------
+@use "sass:map";
+@use "../Variable" as *;
+
+// ease（variableで指定したイージングを）
+// -----------------------------------------------------------------
+
+@function ease($easing) {
+  @if map.has-key($easings, $easing) {
+    @return map.get($easings, $easing);
+  }
+
+  // 定義されていないイージングが指定された時は警告を出して初期値のeaseを返す
+  @warn 'イージング"#{$easing}"は定義されていません';
+  @return ease;
+}
+
+// 呼び出し方
+// .foo {
+//     animation: animation-foo 1s ease(out-expo) .4s both;
+// }
