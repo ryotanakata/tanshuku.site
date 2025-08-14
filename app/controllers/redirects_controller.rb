@@ -19,7 +19,6 @@ class RedirectsController < ApplicationController
       begin
         ip = request.remote_ip
 
-        # クローラーの場合は特別な処理
         if @crawler_service.search_engine_crawler?(request.user_agent)
           Rails.logger.info "Crawler access to short_code: #{short_code} by #{@crawler_service.identify_crawler(request.user_agent)}"
         end
