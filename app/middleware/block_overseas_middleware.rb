@@ -7,8 +7,11 @@ class BlockOverseasMiddleware
 
   def call(env)
     request = Rack::Request.new(env)
-    ip_address = request.ip
+    ip_address = get_real_ip(request)
     user_agent = request.user_agent
+
+    # デバッグ用ログ（本番環境でも一時的に有効）
+    Rails.logger.info "Middleware Debug - Raw IP: #{request.ip}, Real IP: #{ip_address}, X-Forwarded-For: #{request.env['HTTP_X_FORWARDED_FOR']}, X-Real-IP: #{request.env['HTTP_X_REAL_IP']}"
 
     # 開発環境では常に許可
     return @app.call(env) if Rails.env.development?
@@ -38,5 +41,24 @@ class BlockOverseasMiddleware
     end
 
     @app.call(env)
+  end
+
+  private
+
+  def get_real_ip(request)
+    # Railway環境でのプロキシヘッダーを確認
+    # 優先順位: X-Forwarded-For > X-Real-IP > request.ip
+    forwarded_for = request.env['HTTP_X_FORWARDED_FOR']
+    real_ip = request.env['HTTP_X_REAL_IP']
+
+    if forwarded_for.present?
+      # X-Forwarded-For: client, proxy1, proxy2 の形式
+      # 最初のIP（クライアントの実際のIP）を取得
+      forwarded_for.split(',').first.strip
+    elsif real_ip.present?
+      real_ip
+    else
+      request.ip
+    end
   end
 end
