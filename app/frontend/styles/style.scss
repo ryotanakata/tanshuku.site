@@ -65,11 +65,43 @@ body {
       90deg,
       transparent calc(100% - 1px),
       var(--t-color-tertiary-default) calc(100% - 1px)
+    ),
+    radial-gradient(
+      circle at 50% 25%,
+      rgba(var(--t-color-primary-default-rgb), 0.08) 0%,
+      rgba(var(--t-color-primary-default-rgb), 0.04) 40%,
+      transparent 70%
     );
-  background-repeat: repeat;
-  background-position: center;
-  background-size: 16px 16px;
+  background-repeat: repeat, repeat, no-repeat;
+  background-position: center, center, center;
+  background-size:
+    16px 16px,
+    16px 16px,
+    100vh 100vh;
   button:disabled {
     cursor: not-allowed;
+  }
+  @media (min-width: 768px) {
+    background-image:
+      linear-gradient(
+        0deg,
+        transparent calc(100% - 1px),
+        var(--t-color-tertiary-default) calc(100% - 1px)
+      ),
+      linear-gradient(
+        90deg,
+        transparent calc(100% - 1px),
+        var(--t-color-tertiary-default) calc(100% - 1px)
+      ),
+      radial-gradient(
+        circle at 50% 40%,
+        rgba(var(--t-color-primary-default-rgb), 0.08) 0%,
+        rgba(var(--t-color-primary-default-rgb), 0.04) 40%,
+        transparent 70%
+      );
+    background-size:
+      16px 16px,
+      16px 16px,
+      100vw 100vw;
   }
 }
