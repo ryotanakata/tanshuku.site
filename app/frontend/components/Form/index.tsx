@@ -12,30 +12,29 @@ const Form = () => {
     copyToClipboard,
     url,
     loading,
+    error,
     copied,
     generated
   } = useFormHooks();
 
   const renderOutputContent = () => {
+    if (error) return <span>⚠️短縮URLの生成に失敗しました</span>;
+    if (copied) return <span>コピーが完了しました 🎉</span>;
+    if (generated) return <span>短縮URLが生成されました 🎉</span>;
     if (!url) return null;
 
-    switch (true) {
-      case copied: return <span>コピーが完了しました 🎉</span>;
-      case generated: return <span>短縮URLが生成されました 🎉</span>;
-      default:
-        return (
-          <>
-            <a href={url.short_url} target="_blank" rel="noopener noreferrer">
-              {url.short_url}
-            </a>
-            <button onClick={copyToClipboard} aria-label="コピーする">
-              <span className="material-icons-round" aria-hidden="true">
-                content_copy
-              </span>
-            </button>
-          </>
-        );
-    }
+    return (
+      <>
+        <a href={url.short_url} target="_blank" rel="noopener noreferrer">
+          {url.short_url}
+        </a>
+        <button onClick={copyToClipboard} aria-label="コピーする">
+          <span className="material-icons-round" aria-hidden="true">
+            content_copy
+          </span>
+        </button>
+      </>
+    );
   };
 
   return (
@@ -69,13 +68,11 @@ const Form = () => {
           )}
         </fieldset>
 
-        {url && (
-          <div className={styles.output}>
-            <output htmlFor="url">
-              {renderOutputContent()}
-            </output>
-          </div>
-        )}
+        <div className={styles.output}>
+          <output htmlFor="url">
+            {renderOutputContent()}
+          </output>
+        </div>
       </form>
     </section>
   )

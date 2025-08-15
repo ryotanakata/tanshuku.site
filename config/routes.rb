@@ -27,6 +27,6 @@ Rails.application.routes.draw do
   # - User visits: /s/ABC123
   # - RedirectsController#show is called with short_code: "ABC123"
   # - User is redirected to the original URL
-  get 's/:short_code', to: 'redirects#show', as: :short_url
-  get 's/:short_code/', to: 'redirects#show', as: :short_url_with_slash
+  get 's/:short_code', to: 'redirects#show', as: :short
+  get 's/:short_code/', to: 'redirects#show', as: :short_with_slash
 end

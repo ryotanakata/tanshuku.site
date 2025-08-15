@@ -33,8 +33,5 @@ module TanshukuSite
     # Add autoload paths
     config.autoload_paths << Rails.root.join('app', 'middleware')
     config.autoload_paths << Rails.root.join('lib')
-
-    # Base URL for short URLs
-    config.base_url = ENV.fetch('BASE_URL', 'http://localhost:3000')
   end
 end

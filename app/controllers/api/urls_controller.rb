@@ -17,7 +17,7 @@ module Api
       render json: {
         original_url: shortened_url.original_url,
         short_code: shortened_url.short_code,
-        short_url: @shortened_url_service.build_url(shortened_url.short_code),
+        short_url: @shortened_url_service.build_url(request.base_url, shortened_url.short_code),
         created_at: shortened_url.created_at
       }, status: :created
     end
