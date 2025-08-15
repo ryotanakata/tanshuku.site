@@ -7,7 +7,7 @@ const Footer = () => {
     <footer className={styles.footer}>
       <div>
         <p>
-          &copy;{year} <span translate="no">tanshuku</span> - 短縮URL生成サービス
+          &copy;{year} <span translate="no">tanshuku</span> - URL短縮サービス
         </p>
       </div>
     </footer>
