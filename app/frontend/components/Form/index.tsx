@@ -3,19 +3,20 @@ import styles from '@/components/Form/style.module.scss';
 
 const Form = () => {
   const {
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    formState: { errors },
-    onSubmit,
-    copyToClipboard,
     url,
     loading,
     error,
     copied,
-    generated
+    generated,
+    formState: { errors, isSubmitting },
+    register,
+    watch,
+    onSubmit,
+    handleSubmit,
+    handleClickCopyButton,
+    handleClickClearButton,
   } = useFormHooks();
+
 
   const renderOutputContent = () => {
     if (error) return <span>⚠️短縮URLの生成に失敗しました</span>;
@@ -28,7 +29,7 @@ const Form = () => {
         <a href={url.short_url} target="_blank" rel="noopener noreferrer">
           {url.short_url}
         </a>
-        <button onClick={copyToClipboard} aria-label="コピーする">
+        <button onClick={handleClickCopyButton} aria-label="コピーする">
           <span className="material-icons-round" aria-hidden="true">
             content_copy
           </span>
@@ -40,7 +41,7 @@ const Form = () => {
   return (
     <section className={styles.form}>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
-        <fieldset>
+        <fieldset disabled={isSubmitting}>
           <legend>URL</legend>
           <div className={styles.input}>
             <input
@@ -48,13 +49,13 @@ const Form = () => {
               type="url"
               placeholder="https://example.com/long....."
               aria-invalid={errors.url ? 'true' : 'false'}
-              disabled={loading}
+              disabled={isSubmitting || loading}
               autoFocus={true}
               {...register('url')}
             />
             <button
               type="button"
-              onClick={() => setValue('url', '')}
+              onClick={handleClickClearButton}
               aria-label="入力内容をクリア"
               disabled={!watch('url')}
             >

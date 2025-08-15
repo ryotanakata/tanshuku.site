@@ -20,13 +20,13 @@ Rails.application.routes.draw do
   # ========================================
   # Short URL Redirect Routes
   # ========================================
-  # This route handles redirecting short URLs (e.g., /s/ABC123) to their original URLs
+  # This route handles redirecting short URLs (e.g., /ABC123 or /ABC123/) to their original URLs
   # The route must be placed last to avoid conflicts with other routes
   #
   # Example usage:
-  # - User visits: /s/ABC123
+  # - User visits: /ABC123 or /ABC123/
   # - RedirectsController#show is called with short_code: "ABC123"
   # - User is redirected to the original URL
-  get 's/:short_code', to: 'redirects#show', as: :short
-  get 's/:short_code/', to: 'redirects#show', as: :short_with_slash
+  get ':short_code', to: 'redirects#show', as: :short, constraints: { short_code: /[A-Z0-9]{6}/ }
+  get ':short_code/', to: 'redirects#show', as: :short_with_slash, constraints: { short_code: /[A-Z0-9]{6}/ }
 end

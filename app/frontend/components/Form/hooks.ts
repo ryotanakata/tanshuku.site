@@ -20,7 +20,6 @@ const useFormHooks = () => {
     watch,
     setValue,
     formState: { errors, isSubmitting },
-    reset,
   } = useForm({
     resolver: zodResolver(urlSchema),
     mode: 'onChange'
@@ -48,7 +47,7 @@ const useFormHooks = () => {
     }
   };
 
-  const copyToClipboard = async () => {
+  const handleClickCopyButton = async () => {
     try {
       await navigator.clipboard.writeText(url?.short_url || '')
       setCopied(true)
@@ -59,21 +58,25 @@ const useFormHooks = () => {
     }
   };
 
+  const handleClickClearButton = () => {
+    setValue('url', '')
+    setUrl(null)
+  }
+
 
   return {
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    formState: { errors, isSubmitting },
-    reset,
-    onSubmit,
-    copyToClipboard,
     url,
     loading,
     error,
     copied,
-    generated
+    generated,
+    formState: { errors, isSubmitting },
+    register,
+    watch,
+    onSubmit,
+    handleSubmit,
+    handleClickCopyButton,
+    handleClickClearButton,
   };
 }
 
