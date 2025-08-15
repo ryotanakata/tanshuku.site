@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>tanshuku - 短縮URL: <%= short_code %></title>
+  <meta name="description" content="このリンクは「tanshuku」で短縮されたURLです。元のURL: <%= original_url %>">
+  <meta property="og:title" content="tanshuku - 短縮URL: <%= short_code %>">
+  <meta property="og:description" content="このリンクは「tanshuku」で短縮されたURLです。元のURL: <%= original_url %>">
+  <meta property="og:url" content="https://tanshuku.site/<%= short_code %>">
+  <meta property="og:site_name" content="tanshuku - URL短縮サービス">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image" content="https://tanshuku.site/opengraph-image.png">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="tanshuku - 短縮URL: <%= short_code %>">
+  <meta name="twitter:description" content="このリンクは「tanshuku」で短縮されたURLです。元のURL: <%= original_url %>">
+  <meta name="twitter:image" content="https://tanshuku.site/opengraph-image.png">
+  <meta http-equiv="refresh" content="0;url=<%= original_url %>">
+</head>
+<body>
+</body>
+</html>

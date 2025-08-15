@@ -77,4 +77,31 @@ module CrawlerPatterns
       'university-bot'
     ]
   }.freeze
+
+  SNS_PATTERNS = [
+    'line',
+    'twitterbot',
+    'facebookexternalhit',
+    'linkedinbot',
+    'slackbot',
+    'discordbot',
+    'whatsapp',
+    'telegrambot',
+    'instagram',
+    'mastodon',
+    'misskey',
+    'note',
+    'hatena',
+    'pinterest',
+    'tiktok',
+    'youtube',
+    'amazon',
+    'rakuten',
+    'yahoo',
+    'naver',
+    'kakao',
+    'wechat',
+    'qq',
+    'weibo'
+  ].freeze
 end

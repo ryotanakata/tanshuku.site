@@ -3,6 +3,7 @@ require 'crawler_patterns'
 class CrawlerService
   def initialize
     @patterns = CrawlerPatterns::PATTERNS
+    @sns_patterns = CrawlerPatterns::SNS_PATTERNS
   end
 
   def search_engine_crawler?(ua)
@@ -13,6 +14,14 @@ class CrawlerService
     @patterns.values.flatten.any? do |pattern|
       ua_lower.include?(pattern)
     end
+  end
+
+  def social_media_crawler?(ua)
+    return false if ua.blank?
+
+    ua_lower = ua.downcase
+
+    @sns_patterns.any? { |pattern| ua_lower.include?(pattern) }
   end
 
   def identify_crawler(ua)

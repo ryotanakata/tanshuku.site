@@ -34,9 +34,23 @@ class RedirectsController < ApplicationController
         Rails.logger.error "Failed to create redirect log: #{e.message}"
       end
 
-      redirect_to shortened_url.original_url, allow_other_host: true
+      if @crawler_service.social_media_crawler?(request.user_agent)
+        render_ogp_page(shortened_url)
+      else
+        redirect_to shortened_url.original_url, allow_other_host: true
+      end
     else
       render file: "#{Rails.root}/public/404.html", status: :not_found, layout: false
     end
+  end
+
+  private
+
+  def render_ogp_page(url)
+    @shortened_url = url
+    @original_url = url.original_url
+    @short_code = url.short_code
+
+    render 'pages/ogp', layout: false
   end
 end

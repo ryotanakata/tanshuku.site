@@ -1,0 +1,13 @@
+{
+  "name": "tanshuku - 短縮URLサービス",
+  "short_name": "tanshuku",
+  "description": "短縮URLサービス",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f7f8",
+  "theme_color": "#04345a",
+  "icons": [
+    { "src": "/icon-192x192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "/icon-512x512.png", "type": "image/png", "sizes": "512x512" }
+  ]
+}
