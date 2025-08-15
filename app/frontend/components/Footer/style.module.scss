@@ -1,0 +1,16 @@
+@use "@/styles/Foundation" as *;
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  & > div {
+    padding-block-end: 100px;
+  }
+  p {
+    font-size: clamp-calc-vw(12px, 375, 768, 14px);
+    color: var(--b-color-primary-default);
+    text-align: center;
+  }
+}

@@ -1,4 +1,4 @@
-import styles from '@/components/Mv/style.module.scss'
+import styles from '@/components/Main/Mv/style.module.scss'
 
 const Mv = () => {
   return (

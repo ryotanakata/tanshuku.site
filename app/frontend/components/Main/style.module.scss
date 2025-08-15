@@ -1,0 +1,10 @@
+@use "sass:math";
+@use "@/styles/Foundation" as *;
+
+.main {
+  display: block;
+  .inner {
+    width: min(88%, 500px);
+    margin-inline: auto;
+  }
+}

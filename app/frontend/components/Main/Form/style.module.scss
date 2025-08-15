@@ -16,7 +16,10 @@
       border-radius: 10px;
       background-color: var(--b-color-tertiary-default);
       border: 2px solid var(--b-color-primary-default);
-      outline-offset: 4px;
+      outline-offset: 3px;
+      @include media-size() {
+        outline-offset: 4px;
+      }
       &[aria-invalid="true"] {
         border-color: var(--b-color-red-default);
       }
@@ -35,8 +38,13 @@
     & + span {
       display: inline-block;
       color: var(--b-color-red-default);
-      padding-block: 10px;
+      font-size: 14px;
+      line-height: 1.5;
+      margin-block-start: 5%;
       padding-inline: 5px;
+      @include media-size() {
+        margin-block-start: 2.5%;
+      }
     }
   }
   .output {

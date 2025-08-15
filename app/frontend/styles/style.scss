@@ -65,10 +65,3 @@ body {
     cursor: not-allowed;
   }
 }
-main {
-  width: min(88%, 500px);
-  margin-inline: auto;
-  & > div {
-    padding-block: 15%;
-  }
-}

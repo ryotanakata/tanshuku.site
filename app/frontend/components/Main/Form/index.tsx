@@ -1,5 +1,5 @@
-import { useFormHooks } from '@/components/Form/hooks';
-import styles from '@/components/Form/style.module.scss';
+import { useFormHooks } from '@/components/Main/Form/hooks';
+import styles from '@/components/Main/Form/style.module.scss';
 
 const Form = () => {
   const {
@@ -69,11 +69,13 @@ const Form = () => {
           )}
         </fieldset>
 
-        <div className={styles.output}>
-          <output htmlFor="url">
-            {renderOutputContent()}
-          </output>
-        </div>
+        {!errors.url && (
+          <div className={styles.output}>
+            <output htmlFor="url">
+              {renderOutputContent()}
+            </output>
+          </div>
+        )}
       </form>
     </section>
   )

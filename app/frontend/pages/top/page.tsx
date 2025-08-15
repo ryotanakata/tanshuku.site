@@ -1,17 +1,18 @@
-import { Form } from "@/components/Form";
-import { Mv } from "@/components/Mv";
+import { Form } from "@/components/Main/Form";
+import { Mv } from "@/components/Main/Mv";
+import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
+import { Main } from "@/components/Main";
 
 export default function TopPage() {
   return (
     <>
-      <header></header>
-      <main>
-        <div>
-          <Mv />
-          <Form />
-        </div>
-      </main>
-      <footer></footer>
+      <Header />
+      <Main>
+        <Mv />
+        <Form />
+      </Main>
+      <Footer />
     </>
   )
 }
