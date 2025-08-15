@@ -3,45 +3,45 @@ import styles from '@/components/Form/style.module.scss';
 
 const Form = () => {
   const {
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    formState: { errors },
-    onSubmit,
-    copyToClipboard,
     url,
     loading,
+    error,
     copied,
-    generated
+    generated,
+    formState: { errors, isSubmitting },
+    register,
+    watch,
+    onSubmit,
+    handleSubmit,
+    handleClickCopyButton,
+    handleClickClearButton,
   } = useFormHooks();
 
+
   const renderOutputContent = () => {
+    if (error) return <span>⚠️短縮URLの生成に失敗しました</span>;
+    if (copied) return <span>コピーが完了しました 🎉</span>;
+    if (generated) return <span>短縮URLが生成されました 🎉</span>;
     if (!url) return null;
 
-    switch (true) {
-      case copied: return <span>コピーが完了しました 🎉</span>;
-      case generated: return <span>短縮URLが生成されました 🎉</span>;
-      default:
-        return (
-          <>
-            <a href={url.short_url} target="_blank" rel="noopener noreferrer">
-              {url.short_url}
-            </a>
-            <button onClick={copyToClipboard} aria-label="コピーする">
-              <span className="material-icons-round" aria-hidden="true">
-                content_copy
-              </span>
-            </button>
-          </>
-        );
-    }
+    return (
+      <>
+        <a href={url.short_url} target="_blank" rel="noopener noreferrer">
+          {url.short_url}
+        </a>
+        <button onClick={handleClickCopyButton} aria-label="コピーする">
+          <span className="material-icons-round" aria-hidden="true">
+            content_copy
+          </span>
+        </button>
+      </>
+    );
   };
 
   return (
     <section className={styles.form}>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
-        <fieldset>
+        <fieldset disabled={isSubmitting}>
           <legend>URL</legend>
           <div className={styles.input}>
             <input
@@ -49,13 +49,13 @@ const Form = () => {
               type="url"
               placeholder="https://example.com/long....."
               aria-invalid={errors.url ? 'true' : 'false'}
-              disabled={loading}
+              disabled={isSubmitting || loading}
               autoFocus={true}
               {...register('url')}
             />
             <button
               type="button"
-              onClick={() => setValue('url', '')}
+              onClick={handleClickClearButton}
               aria-label="入力内容をクリア"
               disabled={!watch('url')}
             >
@@ -69,13 +69,11 @@ const Form = () => {
           )}
         </fieldset>
 
-        {url && (
-          <div className={styles.output}>
-            <output htmlFor="url">
-              {renderOutputContent()}
-            </output>
-          </div>
-        )}
+        <div className={styles.output}>
+          <output htmlFor="url">
+            {renderOutputContent()}
+          </output>
+        </div>
       </form>
     </section>
   )

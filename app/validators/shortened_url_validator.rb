@@ -1,4 +1,6 @@
 class ShortenedUrlValidator
+  REGEX_HOST = /^(?!\d+\.\d+\.\d+\.\d+$)[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/
+
   def validate_creation!(url)
     errors = []
 
@@ -7,15 +9,19 @@ class ShortenedUrlValidator
     else
       begin
         uri = URI.parse(url)
-        unless uri.is_a?(URI::HTTP) || uri.is_a?(URI::HTTPS)
-          errors << 'HTTPまたはHTTPSのURLを入力してください'
+
+        # プロトコル検証
+        unless uri.scheme&.match?(/^https?$/)
+          errors << 'http://またはhttps://から始まるURLを入力してください'
         end
 
-        if uri.hostname.blank?
+        # ホスト名検証
+        unless uri.host&.match?(REGEX_HOST)
           errors << '有効なドメインを含むURLを入力してください'
         end
 
-        if SiteConfig::BLOCKED_DOMAINS.any? { |domain| uri.hostname&.downcase&.end_with?(domain) }
+        # ブロックされたドメインのチェック
+        if SiteConfig::BLOCKED_DOMAINS.any? { |domain| uri.host&.downcase&.end_with?(domain) }
           errors << 'このURLは短縮できません'
         end
       rescue URI::InvalidURIError

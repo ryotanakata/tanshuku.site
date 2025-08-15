@@ -47,13 +47,13 @@
       align-items: center;
       gap: 10px;
       & > span {
-        font-size: clamp-calc-vw(11px,375, 768, 13px);
+        font-size: clamp-calc-vw(13px,375, 768, 14px);
         color: var(--b-color-primary-default);
       }
     }
 
     a {
-      font-size: clamp-calc-vw(12px,375, 768, 14px);
+      font-size: clamp-calc-vw(14px ,375, 768, 15px);
       color: var(--b-color-primary-default);
       padding-inline: 5px;
       padding-block-end: 2px;
@@ -99,7 +99,7 @@
     button {
       color: var(--b-color-primary-default);
       span {
-        font-size: clamp-calc-vw(15px,375, 768, 19px);
+        font-size: clamp-calc-vw(17px,375, 768, 19px);
       }
     }
   }

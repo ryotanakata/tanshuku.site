@@ -25,11 +25,11 @@ class ShortenedUrlService
     @shortened_url_repository.find_by_short_code(code)
   end
 
-  def build_url(code)
+  def build_url(host, code)
     shortened_url = find_by_short_code(code)
     return nil unless shortened_url
 
-    "#{Rails.application.config.base_url}/s/#{shortened_url.short_code}"
+    "#{host}/#{shortened_url.short_code}"
   end
 
   private
