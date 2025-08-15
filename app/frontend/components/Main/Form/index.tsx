@@ -1,5 +1,5 @@
-import { useFormHooks } from '@/components/Main/Form/hooks';
-import styles from '@/components/Main/Form/style.module.scss';
+import { useFormHooks } from "@/components/Main/Form/hooks";
+import styles from "@/components/Main/Form/style.module.scss";
 
 const Form = () => {
   const {
@@ -16,7 +16,6 @@ const Form = () => {
     handleClickCopyButton,
     handleClickClearButton,
   } = useFormHooks();
-
 
   const renderOutputContent = () => {
     if (error) return <span>⚠️短縮URLの生成に失敗しました</span>;
@@ -48,37 +47,33 @@ const Form = () => {
               id="url"
               type="url"
               placeholder="https://example.com/long....."
-              aria-invalid={errors.url ? 'true' : 'false'}
+              aria-invalid={errors.url ? "true" : "false"}
               disabled={isSubmitting || loading}
               autoFocus={true}
-              {...register('url')}
+              {...register("url")}
             />
             <button
               type="button"
               onClick={handleClickClearButton}
               aria-label="入力内容をクリア"
-              disabled={!watch('url')}
+              disabled={!watch("url")}
             >
               <span className="material-icons-round" aria-hidden="true">
                 close
               </span>
             </button>
           </div>
-          {errors.url && (
-            <span>{errors.url.message}</span>
-          )}
+          {errors.url && <span>{errors.url.message}</span>}
         </fieldset>
 
         {!errors.url && (
           <div className={styles.output}>
-            <output htmlFor="url">
-              {renderOutputContent()}
-            </output>
+            <output htmlFor="url">{renderOutputContent()}</output>
           </div>
         )}
       </form>
     </section>
-  )
-}
+  );
+};
 
 export { Form };

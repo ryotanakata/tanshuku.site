@@ -1,4 +1,4 @@
-import styles from '@/components/Footer/style.module.scss'
+import styles from "@/components/Footer/style.module.scss";
 
 const Footer = () => {
   const year = new Date().getFullYear();
@@ -11,7 +11,7 @@ const Footer = () => {
         </p>
       </div>
     </footer>
-  )
-}
+  );
+};
 
 export { Footer };

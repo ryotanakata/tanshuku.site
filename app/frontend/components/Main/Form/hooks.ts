@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import axios from 'axios';
-import { urlSchema } from '@/schemas/urlSchema';
-import { Url } from '@/types/urlType';
-import { initializeAxios } from '@/utils/axios';
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { z } from "zod";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { Url } from "@/types/urlType";
+import { initializeAxios } from "@/utils/axios";
+import { urlSchema } from "@/schemas/urlSchema";
 
 const useFormHooks = () => {
   const [url, setUrl] = useState<Url | null>(null);
@@ -22,7 +22,7 @@ const useFormHooks = () => {
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(urlSchema),
-    mode: 'onChange'
+    mode: "onChange",
   });
 
   useEffect(() => {
@@ -31,38 +31,37 @@ const useFormHooks = () => {
   }, []);
 
   const onSubmit = async (data: z.infer<typeof urlSchema>) => {
-    setLoading(true)
-    setError(false)
+    setLoading(true);
+    setError(false);
 
     try {
-      const response = await axios.post('/api/urls', data)
-      setUrl(response.data)
-      setGenerated(true)
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      setGenerated(false)
+      const response = await axios.post("/api/urls", data);
+      setUrl(response.data);
+      setGenerated(true);
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      setGenerated(false);
     } catch (error) {
-      setError(true)
+      setError(true);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
 
   const handleClickCopyButton = async () => {
     try {
-      await navigator.clipboard.writeText(url?.short_url || '')
-      setCopied(true)
-      await new Promise(resolve => setTimeout(resolve, 3000));
-      setCopied(false)
+      await navigator.clipboard.writeText(url?.short_url || "");
+      setCopied(true);
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+      setCopied(false);
     } catch (error) {
-      setCopied(false)
+      setCopied(false);
     }
   };
 
   const handleClickClearButton = () => {
-    setValue('url', '')
-    setUrl(null)
-  }
-
+    setValue("url", "");
+    setUrl(null);
+  };
 
   return {
     url,
@@ -78,6 +77,6 @@ const useFormHooks = () => {
     handleClickCopyButton,
     handleClickClearButton,
   };
-}
+};
 
 export { useFormHooks };
