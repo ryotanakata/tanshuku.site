@@ -54,10 +54,18 @@ body {
   max-height: 100vh;
   max-height: 100dvh;
   overflow: hidden;
-  background-color: var(--b-color-white-default);
+  background-color: var(--t-color-white-default);
   background-image:
-    linear-gradient(0deg, transparent calc(100% - 1px), var(--b-color-tertiary-default) calc(100% - 1px)),
-    linear-gradient(90deg, transparent calc(100% - 1px), var(--b-color-tertiary-default) calc(100% - 1px));
+    linear-gradient(
+      0deg,
+      transparent calc(100% - 1px),
+      var(--t-color-tertiary-default) calc(100% - 1px)
+    ),
+    linear-gradient(
+      90deg,
+      transparent calc(100% - 1px),
+      var(--t-color-tertiary-default) calc(100% - 1px)
+    );
   background-repeat: repeat;
   background-position: center;
   background-size: 16px 16px;
