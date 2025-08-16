@@ -5,6 +5,9 @@
   width: min(68%, 300px);
   margin-inline: auto;
   padding-block-start: 35%;
+  h1 {
+    @include visually-hidden();
+  }
   svg {
     fill: var(--t-color-primary-default);
     transform: translateX(-5%);
