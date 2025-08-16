@@ -11,11 +11,11 @@ module Api
 
     def handle_standard_error(exception)
       Rails.logger.error "API Error: #{exception.message}"
-      render json: { error: 'Internal server error' }, status: :internal_server_error
+      render json: { error: "Internal server error" }, status: :internal_server_error
     end
 
     def handle_not_found(exception)
-      render json: { error: 'Resource not found' }, status: :not_found
+      render json: { error: "Resource not found" }, status: :not_found
     end
 
     def handle_parameter_missing(exception)

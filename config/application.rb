@@ -31,7 +31,7 @@ module TanshukuSite
     # config.autoload_lib(ignore: %w(assets tasks))
 
     # Add autoload paths
-    config.autoload_paths << Rails.root.join('app', 'middleware')
-    config.autoload_paths << Rails.root.join('lib')
+    config.autoload_paths << Rails.root.join("app", "middleware")
+    config.autoload_paths << Rails.root.join("lib")
   end
 end

@@ -24,14 +24,14 @@ class BlockOverseasMiddleware
       return [
         403,
         {
-          'Content-Type' => 'application/json; charset=utf-8',
-          'Cache-Control' => 'no-cache'
+          "Content-Type" => "application/json; charset=utf-8",
+          "Cache-Control" => "no-cache"
         },
         [
           {
-            error: 'このサービスは日本国内からのみご利用いただけます',
-            message: 'We\'re sorry, this service is only available in Japan.',
-            code: 'JAPAN_ONLY'
+            error: "このサービスは日本国内からのみご利用いただけます",
+            message: "We're sorry, this service is only available in Japan.",
+            code: "JAPAN_ONLY"
           }.to_json
         ]
       ]

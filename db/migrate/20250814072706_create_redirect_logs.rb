@@ -14,6 +14,6 @@ class CreateRedirectLogs < ActiveRecord::Migration[8.0]
 
     add_index :redirect_logs, :created_at
     add_index :redirect_logs, :country
-    add_index :redirect_logs, [:shortened_url_id, :created_at]
+    add_index :redirect_logs, [ :shortened_url_id, :created_at ]
   end
 end
