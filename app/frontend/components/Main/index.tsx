@@ -13,7 +13,7 @@ const Main = ({ children }: { children: ReactNode }) => {
   return (
     <main className={styles.main}>
       <div>
-        {Children.map(children, (child) => {
+        {Children.map(children, (child, i) => {
           if (child && isValidElement(child)) {
             const childWithProps = child as ReactElement<{
               includeInner?: boolean;
@@ -25,6 +25,7 @@ const Main = ({ children }: { children: ReactNode }) => {
 
             const clonedChild = cloneElement(childWithProps, {
               includeInner: useInner,
+              key: i,
             });
 
             if (useInner) {
