@@ -2,7 +2,7 @@
 
 「tanshuku」は2025年8月にリリースされた国産URL短縮サービス。シンプルで使いやすく、日本国内で安心してご利用いただけます。
 
-![Screenshot of custom video player UI](https://github.com/ryotanakata/tanshuku.site/raw/master/screenshot.gif)
+![Screenshot of UI](https://github.com/ryotanakata/tanshuku.site/raw/main/screenshot.gif)
 
 ## 特徴
 
