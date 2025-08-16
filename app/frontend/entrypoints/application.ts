@@ -3,13 +3,5 @@ import { createElement } from "react";
 import { createRoot } from "react-dom/client";
 import "@/styles/style.scss";
 
-const initializeApp = () => {
-  const body: HTMLElement | null = document.body;
-
-  if (!body) return;
-
-  const root = createRoot(body);
-  root.render(createElement(TopPage));
-};
-
-document.addEventListener("DOMContentLoaded", initializeApp);
+const root = createRoot(document.body);
+root.render(createElement(TopPage));
