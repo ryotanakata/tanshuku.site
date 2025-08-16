@@ -5,6 +5,7 @@ import styles from "@/components/Footer/style.module.scss";
 const Footer = () => {
   const year = new Date().getFullYear();
   const { dialogRef, openDialog, closeDialog } = useDialog();
+  const [y, m, d] = TERMS.LAST_UPDATED.split("-");
 
   return (
     <footer className={styles.footer}>
@@ -20,7 +21,7 @@ const Footer = () => {
                   <p>
                     最終更新日：
                     <time dateTime={TERMS.LAST_UPDATED}>
-                      {TERMS.LAST_UPDATED_DISPLAY}
+                      {y}年{m}月{d}日
                     </time>
                   </p>
                   <dl>
