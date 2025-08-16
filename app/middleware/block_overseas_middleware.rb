@@ -27,14 +27,14 @@ class BlockOverseasMiddleware
   def response_overseas
     status = 403
     headers = {
-      'Content-Type' => 'application/json; charset=utf-8',
-      'Cache-Control' => 'no-cache'
+      "Content-Type" => "application/json; charset=utf-8",
+      "Cache-Control" => "no-cache"
     }
     body = [
       {
-        error: 'このサービスは日本国内からのみご利用いただけます',
-        message: 'We\'re sorry, this service is only available in Japan.',
-        code: 'JAPAN_ONLY'
+        error: "このサービスは日本国内からのみご利用いただけます",
+        message: "We're sorry, this service is only available in Japan.",
+        code: "JAPAN_ONLY"
       }.to_json
     ]
 

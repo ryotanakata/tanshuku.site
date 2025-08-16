@@ -11,10 +11,10 @@ class IpAddressService
   end
 
   def extract_client_ip(request)
-    x_forwarded_for = request.env['HTTP_X_FORWARDED_FOR']
-    x_real_ip = request.env['HTTP_X_REAL_IP']
+    x_forwarded_for = request.env["HTTP_X_FORWARDED_FOR"]
+    x_real_ip = request.env["HTTP_X_REAL_IP"]
 
-    return x_forwarded_for.split(',').first.strip if x_forwarded_for.present?
+    return x_forwarded_for.split(",").first.strip if x_forwarded_for.present?
     return x_real_ip if x_real_ip.present?
 
     request.ip
