@@ -13,7 +13,7 @@ class RedirectsController < ApplicationController
 
   def show
     short_code = params[:short_code]
-    short_code = short_code.chomp('/') if short_code.end_with?('/')
+    short_code = short_code.chomp("/") if short_code.end_with?("/")
     shortened_url = @shortened_url_service.find_by_short_code(short_code)
 
     if shortened_url
@@ -51,6 +51,6 @@ class RedirectsController < ApplicationController
     @original_url = url.original_url
     @short_code = url.short_code
 
-    render 'pages/ogp', layout: false
+    render "pages/ogp", layout: false
   end
 end

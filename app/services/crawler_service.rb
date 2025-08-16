@@ -1,4 +1,4 @@
-require 'crawler_patterns'
+require "crawler_patterns"
 
 class CrawlerService
   def initialize

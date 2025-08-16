@@ -4,104 +4,104 @@
 module CrawlerPatterns
   PATTERNS = {
     google: [
-      'googlebot',
-      'googlebot-image',
-      'googlebot-news',
-      'googlebot-video',
-      'apis-google',
-      'adsbot-google',
-      'mediapartners-google'
+      "googlebot",
+      "googlebot-image",
+      "googlebot-news",
+      "googlebot-video",
+      "apis-google",
+      "adsbot-google",
+      "mediapartners-google"
     ],
     bing: [
-      'bingbot',
-      'msnbot',
-      'adidxbot'
+      "bingbot",
+      "msnbot",
+      "adidxbot"
     ],
     yandex: [
-      'yandexbot',
-      'yandexmetrika'
+      "yandexbot",
+      "yandexmetrika"
     ],
     baidu: [
-      'baiduspider',
-      'baiduspider-image'
+      "baiduspider",
+      "baiduspider-image"
     ],
     facebook: [
-      'facebookexternalhit',
-      'facebookcatalog'
+      "facebookexternalhit",
+      "facebookcatalog"
     ],
     twitter: [
-      'twitterbot'
+      "twitterbot"
     ],
     linkedin: [
-      'linkedinbot'
+      "linkedinbot"
     ],
     slack: [
-      'slackbot'
+      "slackbot"
     ],
     openai: [
-      'openai-ip',
-      'openai-bot',
-      'gptbot'
+      "openai-ip",
+      "openai-bot",
+      "gptbot"
     ],
     anthropic: [
-      'anthropic-ai',
-      'claude-bot',
-      'anthropicbot'
+      "anthropic-ai",
+      "claude-bot",
+      "anthropicbot"
     ],
     google_ai: [
-      'google-ai',
-      'gemini-bot',
-      'palm-bot'
+      "google-ai",
+      "gemini-bot",
+      "palm-bot"
     ],
     microsoft_ai: [
-      'ms-ai',
-      'copilot-bot',
-      'bing-ai'
+      "ms-ai",
+      "copilot-bot",
+      "bing-ai"
     ],
     meta_ai: [
-      'meta-ai',
-      'llama-bot',
-      'meta-llama'
+      "meta-ai",
+      "llama-bot",
+      "meta-llama"
     ],
     cohere: [
-      'cohere-bot',
-      'cohere-ai'
+      "cohere-bot",
+      "cohere-ai"
     ],
     huggingface: [
-      'huggingface-bot',
-      'hf-bot'
+      "huggingface-bot",
+      "hf-bot"
     ],
     research: [
-      'research-bot',
-      'academic-bot',
-      'university-bot'
+      "research-bot",
+      "academic-bot",
+      "university-bot"
     ]
   }.freeze
 
   SNS_PATTERNS = [
-    'line',
-    'twitterbot',
-    'facebookexternalhit',
-    'linkedinbot',
-    'slackbot',
-    'discordbot',
-    'whatsapp',
-    'telegrambot',
-    'instagram',
-    'mastodon',
-    'misskey',
-    'note',
-    'hatena',
-    'pinterest',
-    'tiktok',
-    'youtube',
-    'amazon',
-    'rakuten',
-    'yahoo',
-    'naver',
-    'kakao',
-    'wechat',
-    'qq',
-    'weibo'
+    "line",
+    "twitterbot",
+    "facebookexternalhit",
+    "linkedinbot",
+    "slackbot",
+    "discordbot",
+    "whatsapp",
+    "telegrambot",
+    "instagram",
+    "mastodon",
+    "misskey",
+    "note",
+    "hatena",
+    "pinterest",
+    "tiktok",
+    "youtube",
+    "amazon",
+    "rakuten",
+    "yahoo",
+    "naver",
+    "kakao",
+    "wechat",
+    "qq",
+    "weibo"
   ].freeze
 end

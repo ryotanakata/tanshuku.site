@@ -3,8 +3,8 @@ Rails.application.routes.draw do
 
   # API routes for URL shortening
   namespace :api do
-    get 'urls/test', to: 'urls#test'
-    resources :urls, only: [:create]
+    get "urls/test", to: "urls#test"
+    resources :urls, only: [ :create ]
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -27,6 +27,6 @@ Rails.application.routes.draw do
   # - User visits: /ABC123 or /ABC123/
   # - RedirectsController#show is called with short_code: "ABC123"
   # - User is redirected to the original URL
-  get ':short_code', to: 'redirects#show', as: :short, constraints: { short_code: /[A-Z0-9]{6}/ }
-  get ':short_code/', to: 'redirects#show', as: :short_with_slash, constraints: { short_code: /[A-Z0-9]{6}/ }
+  get ":short_code", to: "redirects#show", as: :short, constraints: { short_code: /[A-Z0-9]{6}/ }
+  get ":short_code/", to: "redirects#show", as: :short_with_slash, constraints: { short_code: /[A-Z0-9]{6}/ }
 end

@@ -3,9 +3,9 @@
 
 module SiteConfig
   BLOCKED_DOMAINS = [
-    'tanshuku.site',
-    'localhost',
-    '127.0.0.1',
-    '0.0.0.0'
+    "tanshuku.site",
+    "localhost",
+    "127.0.0.1",
+    "0.0.0.0"
   ].freeze
 end
