@@ -74,7 +74,7 @@ RSpec.describe ShortenedUrlService, type: :service do
         allow(repository).to receive(:create).and_return(invalid_shortened_url)
         allow(invalid_shortened_url).to receive(:persisted?).and_return(false)
         allow(invalid_shortened_url).to receive(:errors).and_return(
-          double(full_messages: ['Error message'])
+          double(full_messages: [ "Error message" ])
         )
       end
 
