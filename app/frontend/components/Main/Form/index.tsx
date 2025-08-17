@@ -18,7 +18,7 @@ const Form = () => {
   } = useFormHooks();
 
   const renderOutputContent = () => {
-    if (error) return <span>⚠️短縮URLの生成に失敗しました</span>;
+    if (error) return <span>⚠️ 短縮URLの生成に失敗しました</span>;
     if (copied) return <span>コピーが完了しました 🎉</span>;
     if (generated) return <span>短縮URLが生成されました 🎉</span>;
     if (!url) return null;
