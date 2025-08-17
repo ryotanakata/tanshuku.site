@@ -20,19 +20,4 @@ export default defineConfig({
       generateScopedName: "style_[local]__[hash:base64:5]",
     },
   },
-  build: {
-    manifest: true,
-    sourcemap: false,
-    rollupOptions: {
-      output: {
-        entryFileNames: "assets/[name]-[hash].js",
-        chunkFileNames: "assets/[name]-[hash].js",
-        assetFileNames: "assets/[name]-[hash][extname]",
-      },
-    },
-    target: "es2019",
-  },
-  esbuild: {
-    target: "safari13",
-  },
 });
