@@ -1,12 +1,10 @@
 @use "@/styles/Foundation" as *;
 
 .footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
   width: 100%;
+  margin-block-start: auto;
   & > div {
-    padding-block-end: 100px;
+    padding-block: 50px;
   }
   .terms {
     display: flex;
@@ -18,18 +16,12 @@
     }
     dialog {
       backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
       opacity: 0;
       visibility: hidden;
       &[open] {
         opacity: 1;
         visibility: visible;
-      }
-      & > div {
-        overflow-y: auto;
-        & > div {
-          width: min(90%, 500px);
-          margin: 0 auto;
-        }
       }
     }
     .content {
@@ -38,22 +30,27 @@
       max-height: 100dvh;
       padding-block: 10%;
       position: relative;
+      overflow-y: auto;
       will-change: background-position;
+      & > div {
+        width: min(90%, 500px);
+        margin: 0 auto;
+        & > h2 {
+          font-size: clamp-calc-vw(17px, 375, 768, 19px);
+          font-weight: bold;
+          line-height: 1.5;
+          letter-spacing: 0.05em;
+          color: var(--t-color-primary-default);
+          padding: 10% 0;
+          text-align: center;
+        }
+        & > p {
+          font-size: clamp-calc-vw(12px, 375, 768, 14px);
+          text-align: right;
+        }
+      }
       &:focus {
         outline: none;
-      }
-      & > h2 {
-        font-size: clamp-calc-vw(17px, 375, 768, 19px);
-        font-weight: bold;
-        line-height: 1.5;
-        letter-spacing: 0.05em;
-        color: var(--t-color-primary-default);
-        padding: 10% 0;
-        text-align: center;
-      }
-      & > p {
-        font-size: clamp-calc-vw(12px, 375, 768, 14px);
-        text-align: right;
       }
       dt {
         font-size: clamp-calc-vw(13px, 375, 768, 15px);
@@ -115,11 +112,11 @@
     }
   }
   .copyright {
+    padding-block: 15px 50px;
     p {
       font-size: clamp-calc-vw(12px, 375, 768, 14px);
       color: var(--t-color-primary-default);
       text-align: center;
-      padding-block-start: 15px;
     }
   }
 }

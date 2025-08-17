@@ -49,10 +49,6 @@ body {
   font-feature-settings: "palt" 1;
   line-height: 1;
   letter-spacing: 0.05em;
-  min-height: 100vh;
-  min-height: 100dvh;
-  max-height: 100vh;
-  max-height: 100dvh;
   background-color: var(--t-color-white-default);
   background-image:
     linear-gradient(
@@ -66,41 +62,34 @@ body {
       var(--t-color-tertiary-default) calc(100% - 1px)
     ),
     radial-gradient(
-      circle at 50% 25%,
+      circle at center,
       rgba(var(--t-color-primary-default-rgb), 0.08) 0%,
-      rgba(var(--t-color-primary-default-rgb), 0.04) 40%,
       transparent 70%
     );
   background-repeat: repeat, repeat, no-repeat;
-  background-position: center, center, center;
+  background-position:
+    center,
+    center,
+    50% 20%;
   background-size:
     16px 16px,
     16px 16px,
-    100vh 100vh;
+    75vw 75vw;
   button:disabled {
     cursor: not-allowed;
   }
-  @media (min-width: 1024px) {
-    background-image:
-      linear-gradient(
-        0deg,
-        transparent calc(100% - 1px),
-        var(--t-color-tertiary-default) calc(100% - 1px)
-      ),
-      linear-gradient(
-        90deg,
-        transparent calc(100% - 1px),
-        var(--t-color-tertiary-default) calc(100% - 1px)
-      ),
-      radial-gradient(
-        circle at 50% 40%,
-        rgba(var(--t-color-primary-default-rgb), 0.08) 0%,
-        rgba(var(--t-color-primary-default-rgb), 0.04) 40%,
-        transparent 70%
-      );
+  @media (min-width: 768px) {
+    background-position: center, center, center;
     background-size:
       16px 16px,
       16px 16px,
       100vw 100vw;
+  }
+  & > div {
+    display: grid;
+    min-height: 100vh;
+    min-height: 100dvh;
+    max-height: 100vh;
+    max-height: 100dvh;
   }
 }
