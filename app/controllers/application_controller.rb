@@ -10,9 +10,9 @@ class ApplicationController < ActionController::Base
   def set_html_cache_headers
     if Rails.env.production?
       # HTMLは毎回更新を取りに行かせる
-      response.headers['Cache-Control'] = 'no-store, must-revalidate'
-      response.headers['Pragma'] = 'no-cache'
-      response.headers['Expires'] = '0'
+      response.headers["Cache-Control"] = "no-store, must-revalidate"
+      response.headers["Pragma"] = "no-cache"
+      response.headers["Expires"] = "0"
     end
   end
 end

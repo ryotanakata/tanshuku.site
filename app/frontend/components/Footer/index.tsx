@@ -15,8 +15,8 @@ const Footer = () => {
 
           <dialog ref={dialogRef} onClick={() => closeDialog()}>
             <div>
-              <div>
-                <div tabIndex={0} className={styles.content}>
+              <div tabIndex={0} className={styles.content}>
+                <div>
                   <h2>利用規約</h2>
                   <p>
                     最終更新日：
