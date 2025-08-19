@@ -44,11 +44,11 @@ class Rack::Attack
         "Content-Type" => "application/json; charset=utf-8",
         "Retry-After" => period.to_s
       },
-      [{
+      [ {
         error: "Rate limit exceeded",
         message: "リクエストが多すぎます。しばらく待ってから再試行してください。",
         retry_after: period
-      }.to_json]
+      }.to_json ]
     ]
   end
 end
