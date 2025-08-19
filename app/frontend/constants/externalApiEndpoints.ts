@@ -1,0 +1,3 @@
+const EXTERNAL_API_ENDPOINTS = {};
+
+export { EXTERNAL_API_ENDPOINTS };

@@ -1,10 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
 import { z } from "zod";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Url } from "@/types/urlType";
-import { initializeAxios } from "@/utils/axios";
+import { fetchShotendUrl } from "@/utils/internalApi";
 import { urlSchema } from "@/schemas/urlSchema";
 
 const useFormHooks = () => {
@@ -25,17 +24,12 @@ const useFormHooks = () => {
     mode: "onChange",
   });
 
-  useEffect(() => {
-    const cleanup = initializeAxios();
-    return cleanup;
-  }, []);
-
   const onSubmit = async (data: z.infer<typeof urlSchema>) => {
     setLoading(true);
     setError(false);
 
     try {
-      const response = await axios.post("/api/urls", data);
+      const response = await fetchShotendUrl(data.url);
       setUrl(response.data);
       setGenerated(true);
       await new Promise((resolve) => setTimeout(resolve, 1500));
