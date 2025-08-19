@@ -9,7 +9,7 @@ import { urlSchema } from "@/schemas/urlSchema";
 
 const useFormHooks = () => {
   const [url, setUrl] = useState<Url | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [copied, setCopied] = useState(false);
   const [generated, setGenerated] = useState(false);
