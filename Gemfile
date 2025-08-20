@@ -44,6 +44,9 @@ gem "paranoia", "~> 3.0"
 # IP geolocation
 gem "maxmind-db"
 
+# Cloudflare
+gem "cloudflare-rails"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#testing
   gem "rspec-rails", "~> 7.0"
