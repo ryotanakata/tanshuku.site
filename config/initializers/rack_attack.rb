@@ -1,5 +1,5 @@
 class Rack::Attack
-  Rack::Attack.cache.store = Rails.cache
+  Rack::Attack.cache.store = ActiveSupport::Cache::MemoryStore.new
 
   # 1分間制限
   throttle("api/urls/ip", limit: 10, period: 1.minute) do |req|
