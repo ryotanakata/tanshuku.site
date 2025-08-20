@@ -17,6 +17,7 @@
 - **データベース**: PostgreSQL
 - **アセットパイプライン**: Vite
 - **スタイリング**: SCSS
+- **CDN・セキュリティ**: Cloudflare
 - **デプロイ**: Railway
 - **コンテナ**: Docker
 
