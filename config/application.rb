@@ -33,5 +33,8 @@ module TanshukuSite
     # Add autoload paths
     config.autoload_paths << Rails.root.join("app", "middleware")
     config.autoload_paths << Rails.root.join("lib")
+
+    # Cloudflare経由のアクセスのみ許可
+    config.cloudflare_proxied = true
   end
 end
