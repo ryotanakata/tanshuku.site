@@ -8,7 +8,7 @@ const Form = () => {
     error,
     copied,
     generated,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isValid },
     register,
     watch,
     onSubmit,
@@ -17,23 +17,38 @@ const Form = () => {
     handleClickClearButton,
   } = useFormHooks();
 
-  const renderOutputContent = () => {
-    if (error) return <span>⚠️ 短縮URLの生成に失敗しました</span>;
-    if (copied) return <span>コピーが完了しました 🎉</span>;
-    if (generated) return <span>短縮URLが生成されました 🎉</span>;
+  const renderOutput = () => {
+    let message = "";
+
+    if (error) message = "⚠️ 短縮に失敗しました";
+    if (copied) message = "コピーが完了しました ✅";
+    if (generated) message = "短縮が完了しました 🎉";
+
+    if (message) {
+      return (
+        <output htmlFor="url">
+          <span>{message}</span>
+        </output>
+      );
+    }
+
     if (!url) return null;
 
     return (
-      <>
+      <output htmlFor="url">
         <a href={url.short_url} target="_blank" rel="noopener noreferrer">
           {url.short_url}
         </a>
-        <button onClick={handleClickCopyButton} aria-label="コピーする">
+        <button
+          type="button"
+          onClick={handleClickCopyButton}
+          aria-label="コピーする"
+        >
           <span className="material-icons-round" aria-hidden="true">
             content_copy
           </span>
         </button>
-      </>
+      </output>
     );
   };
 
@@ -63,14 +78,19 @@ const Form = () => {
               </span>
             </button>
           </div>
-          {errors.url && <span>{errors.url.message}</span>}
-        </fieldset>
-
-        {!errors.url && (
-          <div className={styles.output}>
-            <output htmlFor="url">{renderOutputContent()}</output>
+          <div className={styles.error}>
+            {errors.url && <p>{errors.url.message}</p>}
           </div>
-        )}
+          <div className={styles.output}>{renderOutput()}</div>
+          <div className={styles.button}>
+            <button
+              type="submit"
+              disabled={!isValid || isSubmitting || loading}
+            >
+              {isSubmitting ? "短縮中..." : "短縮する"}
+            </button>
+          </div>
+        </fieldset>
       </form>
     </section>
   );
