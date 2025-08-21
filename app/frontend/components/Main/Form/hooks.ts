@@ -18,7 +18,7 @@ const useFormHooks = () => {
     handleSubmit,
     watch,
     setValue,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isValid },
   } = useForm({
     resolver: zodResolver(urlSchema),
     mode: "onChange",
@@ -63,7 +63,7 @@ const useFormHooks = () => {
     error,
     copied,
     generated,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isValid },
     register,
     watch,
     onSubmit,

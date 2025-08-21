@@ -11,7 +11,7 @@
     input {
       width: 100%;
       padding: 15px;
-      padding-right: 50px; // ボタンのスペースを確保
+      padding-right: 45px;
       font-size: 16px;
       border-radius: 10px;
       background-color: var(--t-color-tertiary-default);
@@ -30,33 +30,56 @@
       right: 0;
       padding: 10px;
       color: var(--t-color-gray-default);
+      aspect-ratio: 1;
+      border-radius: 100vmax;
       transform: translateY(-50%);
       &:disabled {
         @include visually-hidden();
-      }
-    }
-    & + span {
-      display: inline-block;
-      color: var(--t-color-red-default);
-      font-size: 14px;
-      line-height: 1.5;
-      margin-block-start: 5%;
-      padding-inline: 5px;
-      @include media-size() {
-        margin-block-start: 2.5%;
+        span {
+          @include visually-hidden();
+        }
       }
     }
   }
+  .error {
+    &:has(p) {
+      padding-block: 10px 20px;
+      @include media-size() {
+        padding-block: 15px;
+      }
+      & + .output {
+        display: none;
+      }
+      & + .output + .button {
+        padding-block-start: 0;
+      }
+    }
+    p {
+      font-size: 14px;
+      color: var(--t-color-red-default);
+      line-height: 1.5;
+    }
+  }
   .output {
-    margin-block-start: 7.5%;
     text-align: center;
+    &:has(output) {
+      padding-block: 30px;
+      @include media-size() {
+        padding-block: 40px;
+      }
+      & + .button {
+        padding-block-start: 0;
+      }
+    }
     output {
       display: inline-flex;
       align-items: center;
       gap: 10px;
       & > span {
-        font-size: clamp-calc-vw(13px, 375, 768, 14px);
+        font-size: clamp-calc-vw(14px, 375, 768, 15px);
         color: var(--t-color-primary-default);
+        padding-inline: 5px;
+        padding-block: 3px;
       }
     }
 
@@ -64,7 +87,7 @@
       font-size: clamp-calc-vw(14px, 375, 768, 15px);
       color: var(--t-color-primary-default);
       padding-inline: 5px;
-      padding-block-end: 2px;
+      padding-block: 3px;
       overflow: hidden;
       position: relative;
       &::before {
@@ -108,6 +131,25 @@
       color: var(--t-color-primary-default);
       span {
         font-size: clamp-calc-vw(17px, 375, 768, 19px);
+      }
+    }
+  }
+  .button {
+    padding-block-start: 50px;
+    text-align: center;
+    button {
+      font-size: clamp-calc-vw(12px, 375, 768, 14px);
+      color: var(--t-color-white-default);
+      background-color: var(--t-color-primary-default);
+      padding-block: 10px;
+      padding-inline: 90px;
+      border-radius: 10px;
+      &:disabled {
+        background-color: var(--t-color-gray-light);
+        cursor: not-allowed;
+      }
+      @include media-size() {
+        padding-inline: 110px;
       }
     }
   }
