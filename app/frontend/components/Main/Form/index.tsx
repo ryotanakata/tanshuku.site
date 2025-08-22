@@ -26,7 +26,7 @@ const Form = () => {
 
     if (message) {
       return (
-        <output htmlFor="url">
+        <output>
           <span>{message}</span>
         </output>
       );
@@ -35,7 +35,7 @@ const Form = () => {
     if (!url) return null;
 
     return (
-      <output htmlFor="url">
+      <output>
         <a href={url.short_url} target="_blank" rel="noopener noreferrer">
           {url.short_url}
         </a>
