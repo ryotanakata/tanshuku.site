@@ -1,22 +1,28 @@
 import { TERMS } from "@/constants/termsConstant";
-import { useDialog } from "@/hooks/useDialog";
+import { useFooterHooks } from "@/components/Footer/hooks";
 import styles from "@/components/Footer/style.module.scss";
 
 const Footer = () => {
-  const year = new Date().getFullYear();
-  const { dialogRef, openDialog, closeDialog } = useDialog();
-  const [y, m, d] = TERMS.LAST_UPDATED.split("-");
+  const {
+    year,
+    y,
+    m,
+    d,
+    dialogRef,
+    handleClickCloseButton,
+    handleClickTermsButton,
+  } = useFooterHooks();
 
   return (
     <footer className={styles.footer}>
       <div>
         <div className={styles.terms}>
-          <button onClick={() => openDialog()}>利用規約</button>
+          <button onClick={handleClickTermsButton}>利用規約</button>
 
-          <dialog ref={dialogRef} onClick={() => closeDialog()}>
+          <dialog ref={dialogRef} onClick={handleClickCloseButton}>
             <div>
               <div tabIndex={0} className={styles.content}>
-                <div>
+                <div onClick={(e) => e.stopPropagation()}>
                   <h2>利用規約</h2>
                   <p>
                     最終更新日：
@@ -53,7 +59,7 @@ const Footer = () => {
                     ))}
                   </dl>
                   <div className={styles.button}>
-                    <button onClick={() => closeDialog()}>閉じる</button>
+                    <button onClick={handleClickCloseButton}>閉じる</button>
                   </div>
                 </div>
               </div>
