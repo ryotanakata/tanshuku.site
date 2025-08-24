@@ -13,6 +13,7 @@ const Form = () => {
     watch,
     onSubmit,
     handleSubmit,
+    handleClickShortenButton,
     handleClickCopyButton,
     handleClickClearButton,
   } = useFormHooks();
@@ -86,6 +87,7 @@ const Form = () => {
             <button
               type="submit"
               disabled={!isValid || isSubmitting || loading}
+              onClick={handleClickShortenButton}
             >
               {isSubmitting ? "短縮中..." : "短縮する"}
             </button>

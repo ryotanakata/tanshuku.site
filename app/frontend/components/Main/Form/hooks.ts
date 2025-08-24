@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useState } from "react";
+import { useHaptic } from "react-haptic";
 import { useForm } from "react-hook-form";
 import { Url } from "@/types/urlType";
 import { fetchShotendUrl } from "@/utils/internalApi";
@@ -12,6 +13,7 @@ const useFormHooks = () => {
   const [error, setError] = useState(false);
   const [copied, setCopied] = useState(false);
   const [generated, setGenerated] = useState(false);
+  const { vibrate } = useHaptic();
 
   const {
     register,
@@ -41,7 +43,13 @@ const useFormHooks = () => {
     }
   };
 
+  const handleClickShortenButton = () => {
+    vibrate();
+  };
+
   const handleClickCopyButton = async () => {
+    vibrate();
+
     try {
       await navigator.clipboard.writeText(url?.short_url || "");
       setCopied(true);
@@ -53,6 +61,7 @@ const useFormHooks = () => {
   };
 
   const handleClickClearButton = () => {
+    vibrate();
     setValue("url", "");
     setUrl(null);
   };
@@ -68,6 +77,7 @@ const useFormHooks = () => {
     watch,
     onSubmit,
     handleSubmit,
+    handleClickShortenButton,
     handleClickCopyButton,
     handleClickClearButton,
   };
