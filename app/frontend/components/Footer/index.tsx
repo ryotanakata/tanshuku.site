@@ -5,9 +5,7 @@ import styles from "@/components/Footer/style.module.scss";
 const Footer = () => {
   const {
     year,
-    y,
-    m,
-    d,
+    date,
     dialogRef,
     handleClickCloseButton,
     handleClickTermsButton,
@@ -26,9 +24,7 @@ const Footer = () => {
                   <h2>利用規約</h2>
                   <p>
                     最終更新日：
-                    <time dateTime={TERMS.LAST_UPDATED}>
-                      {y}年{m}月{d}日
-                    </time>
+                    <time dateTime={TERMS.LAST_UPDATED}>{date}</time>
                   </p>
                   <dl>
                     {TERMS.SECTIONS.map((section, i) => (
