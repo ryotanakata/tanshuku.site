@@ -6,6 +6,7 @@ const useFooterHooks = () => {
   const year = new Date().getFullYear();
   const { dialogRef, openDialog, closeDialog } = useDialog();
   const [y, m, d] = TERMS.LAST_UPDATED.split("-");
+  const date = `${y}年${m}月${d}日`;
   const { vibrate } = useHaptic();
   const handleClickCloseButton = () => {
     vibrate();
@@ -18,9 +19,7 @@ const useFooterHooks = () => {
 
   return {
     year,
-    y,
-    m,
-    d,
+    date,
     dialogRef,
     handleClickCloseButton,
     handleClickTermsButton,
