@@ -49,7 +49,7 @@ gem "cloudflare-rails"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#testing
-  gem "rspec-rails", "~> 7.0"
+  gem "rspec-rails", "~> 8.0"
 end
 
 group :development do
