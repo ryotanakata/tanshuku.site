@@ -18,7 +18,7 @@ class RedirectsController < ApplicationController
 
     if shortened_url
       begin
-        ip = request.remote_ip
+        ip = @ip_address_service.extract_client_ip(request)
 
         if @crawler_service.search_engine_crawler?(request.user_agent)
           Rails.logger.info "Crawler access to short_code: #{short_code} by #{@crawler_service.identify_crawler(request.user_agent)}"
