@@ -39,7 +39,7 @@ gem "thruster", require: false
 # gem "image_processing", "~> 1.2"
 
 # Soft delete support
-gem "paranoia", "~> 3.0"
+gem "paranoia", "~> 3.1"
 
 # IP geolocation
 gem "maxmind-db"
