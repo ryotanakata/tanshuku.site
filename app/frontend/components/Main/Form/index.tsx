@@ -68,22 +68,24 @@ const Form = () => {
               autoFocus={true}
               {...register("url")}
             />
-            <button
-              type="button"
-              onClick={handleClickClearButton}
-              aria-label="入力内容をクリア"
-              disabled={!watch("url")}
-            >
-              <span className="material-icons-round" aria-hidden="true">
-                close
-              </span>
-            </button>
+            <div className={styles.clear}>
+              <button
+                type="button"
+                onClick={handleClickClearButton}
+                aria-label="入力内容をクリア"
+                disabled={!watch("url")}
+              >
+                <span className="material-icons-round" aria-hidden="true">
+                  close
+                </span>
+              </button>
+            </div>
           </div>
           <div className={styles.error}>
             {errors.url && <p>{errors.url.message}</p>}
           </div>
           <div className={styles.output}>{renderOutput()}</div>
-          <div className={styles.button}>
+          <div className={styles.submit}>
             <button
               type="submit"
               disabled={!isValid || isSubmitting || loading}
