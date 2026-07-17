@@ -24,19 +24,23 @@
         border-color: var(--t-color-red-default);
       }
     }
-    button {
+    .clear {
       position: absolute;
       top: 50%;
       right: 0;
-      padding: 10px;
-      color: var(--t-color-gray-default);
-      aspect-ratio: 1;
-      border-radius: 100vmax;
+      width: 45px;
+      height: 45px;
       transform: translateY(-50%);
-      &:disabled {
-        @include visually-hidden();
-        span {
+      button {
+        width: 100%;
+        height: 100%;
+        color: var(--t-color-gray-default);
+        border-radius: 100vmax;
+        &:disabled {
           @include visually-hidden();
+          span {
+            @include visually-hidden();
+          }
         }
       }
     }
@@ -134,7 +138,7 @@
       }
     }
   }
-  .button {
+  .submit {
     padding-block-start: 50px;
     text-align: center;
     button {
