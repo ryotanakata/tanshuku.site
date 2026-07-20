@@ -49,6 +49,24 @@ RSpec.describe ShortenedUrlRepository, type: :repository do
     end
   end
 
+  describe '#find_by_id' do
+    let!(:shortened_url) do
+      ShortenedUrl.create!(
+        original_url: 'https://example.com',
+        short_code: 'ABC123'
+      )
+    end
+
+    it 'finds shortened URL by id' do
+      result = repository.find_by_id(shortened_url.id)
+      expect(result).to eq(shortened_url)
+    end
+
+    it 'returns nil for non-existent id' do
+      expect(repository.find_by_id(0)).to be_nil
+    end
+  end
+
   describe '#find_by_original_url' do
     let!(:shortened_url) do
       ShortenedUrl.create!(
