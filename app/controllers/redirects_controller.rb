@@ -1,13 +1,12 @@
 class RedirectsController < ApplicationController
   def initialize(
     shortened_url_service: ShortenedUrlService.new,
-    redirect_log_service: RedirectLogService.new,
-    ip_address_service: IpAddressService.new,
+    log_redirect_job: LogRedirectJob,
     crawler_service: CrawlerService.new
   )
+    super()
     @shortened_url_service = shortened_url_service
-    @redirect_log_service = redirect_log_service
-    @ip_address_service = ip_address_service
+    @log_redirect_job = log_redirect_job
     @crawler_service = crawler_service
   end
 
@@ -17,22 +16,18 @@ class RedirectsController < ApplicationController
     shortened_url = @shortened_url_service.find_by_short_code(short_code)
 
     if shortened_url
-      begin
-        ip = @ip_address_service.extract_client_ip(request)
+      ip = request.remote_ip
 
-        if @crawler_service.search_engine_crawler?(request.user_agent)
-          Rails.logger.info "Crawler access to short_code: #{short_code} by #{@crawler_service.identify_crawler(request.user_agent)}"
-        end
-
-        if @ip_address_service.overseas_ip?(ip)
-          @redirect_log_service.create_anonymous_log(shortened_url, request)
-        else
-          geo = @ip_address_service.lookup_geo_db(ip)
-          @redirect_log_service.create_log(shortened_url, request, geo)
-        end
-      rescue => e
-        Rails.logger.error "Failed to create redirect log: #{e.message}"
+      if @crawler_service.search_engine_crawler?(request.user_agent)
+        Rails.logger.info "Crawler access to short_code: #{short_code} by #{@crawler_service.identify_crawler(request.user_agent)}"
       end
+
+      @log_redirect_job.perform_later(
+        shortened_url_id: shortened_url.id,
+        ip_address: ip,
+        user_agent: request.user_agent || "unknown",
+        referer: request.referer || "unknown"
+      )
 
       if @crawler_service.social_media_crawler?(request.user_agent)
         render_ogp_page(shortened_url)

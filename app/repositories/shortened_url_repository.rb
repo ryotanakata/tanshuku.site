@@ -9,6 +9,10 @@ class ShortenedUrlRepository
     ShortenedUrl.find_by(short_code: short_code.upcase)
   end
 
+  def find_by_id(id)
+    ShortenedUrl.find_by(id: id)
+  end
+
   def find_by_original_url(original_url)
     ShortenedUrl.find_by(original_url: original_url)
   end
