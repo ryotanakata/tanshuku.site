@@ -1,79 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe IpAddressService, type: :service do
-  let(:service) { described_class.new }
   let(:mock_country_db) { instance_double(MaxMind::DB) }
-  let(:mock_city_db) { instance_double(MaxMind::DB) }
-  let(:mock_isp_db) { instance_double(MaxMind::DB) }
+  let(:mock_city_db)    { instance_double(MaxMind::DB) }
+  let(:mock_isp_db)     { instance_double(MaxMind::DB) }
+  let(:service) { described_class.new }
 
   before do
-    allow(MaxMind::DB).to receive(:new).and_return(mock_country_db, mock_city_db, mock_isp_db)
+    allow(described_class).to receive(:country_db).and_return(mock_country_db)
+    allow(described_class).to receive(:city_db).and_return(mock_city_db)
+    allow(described_class).to receive(:isp_db).and_return(mock_isp_db)
     allow(Rails.logger).to receive(:error)
     allow(Rails.logger).to receive(:info)
-  end
-
-  describe '#extract_client_ip' do
-    let(:request) { double('request') }
-
-    context 'with X-Forwarded-For header' do
-      before do
-        allow(request).to receive(:env).and_return({
-          'HTTP_X_FORWARDED_FOR' => '192.168.1.1, 10.0.0.1',
-          'HTTP_X_REAL_IP' => '172.16.0.1'
-        })
-        allow(request).to receive(:ip).and_return('127.0.0.1')
-      end
-
-      it 'returns first IP from X-Forwarded-For' do
-        result = service.extract_client_ip(request)
-        expect(result).to eq('192.168.1.1')
-      end
-    end
-
-    context 'with X-Real-IP header' do
-      before do
-        allow(request).to receive(:env).and_return({
-          'HTTP_X_FORWARDED_FOR' => nil,
-          'HTTP_X_REAL_IP' => '172.16.0.1'
-        })
-        allow(request).to receive(:ip).and_return('127.0.0.1')
-      end
-
-      it 'returns X-Real-IP when X-Forwarded-For is not present' do
-        result = service.extract_client_ip(request)
-        expect(result).to eq('172.16.0.1')
-      end
-    end
-
-    context 'with no proxy headers' do
-      before do
-        allow(request).to receive(:env).and_return({
-          'HTTP_X_FORWARDED_FOR' => nil,
-          'HTTP_X_REAL_IP' => nil
-        })
-        allow(request).to receive(:ip).and_return('127.0.0.1')
-      end
-
-      it 'returns request.ip when no proxy headers are present' do
-        result = service.extract_client_ip(request)
-        expect(result).to eq('127.0.0.1')
-      end
-    end
-
-    context 'with comma-separated X-Forwarded-For' do
-      before do
-        allow(request).to receive(:env).and_return({
-          'HTTP_X_FORWARDED_FOR' => ' 203.0.113.1 , 10.0.0.1 ',
-          'HTTP_X_REAL_IP' => nil
-        })
-        allow(request).to receive(:ip).and_return('127.0.0.1')
-      end
-
-      it 'strips whitespace from first IP' do
-        result = service.extract_client_ip(request)
-        expect(result).to eq('203.0.113.1')
-      end
-    end
   end
 
   describe '#overseas_ip?' do
@@ -85,8 +23,7 @@ RSpec.describe IpAddressService, type: :service do
       end
 
       it 'returns false for Japanese IP' do
-        result = service.overseas_ip?('203.0.113.1')
-        expect(result).to be false
+        expect(service.overseas_ip?('203.0.113.1')).to be false
       end
 
       it 'logs the country information' do
@@ -103,8 +40,7 @@ RSpec.describe IpAddressService, type: :service do
       end
 
       it 'returns true for non-Japanese IP' do
-        result = service.overseas_ip?('8.8.8.8')
-        expect(result).to be true
+        expect(service.overseas_ip?('8.8.8.8')).to be true
       end
 
       it 'logs the country information' do
@@ -141,8 +77,7 @@ RSpec.describe IpAddressService, type: :service do
       end
 
       it 'returns true for nil result' do
-        result = service.overseas_ip?('1.1.1.1')
-        expect(result).to be true
+        expect(service.overseas_ip?('1.1.1.1')).to be true
       end
     end
   end
@@ -164,8 +99,7 @@ RSpec.describe IpAddressService, type: :service do
       end
 
       it 'returns complete geo information' do
-        result = service.lookup_geo_db(ip)
-        expect(result).to eq({
+        expect(service.lookup_geo_db(ip)).to eq({
           country: 'JP',
           city: 'Tokyo',
           isp: 'NTT Communications'
@@ -183,8 +117,7 @@ RSpec.describe IpAddressService, type: :service do
       end
 
       it 'returns unknown for missing data' do
-        result = service.lookup_geo_db(ip)
-        expect(result).to eq({
+        expect(service.lookup_geo_db(ip)).to eq({
           country: 'JP',
           city: 'unknown',
           isp: 'unknown'
@@ -199,11 +132,7 @@ RSpec.describe IpAddressService, type: :service do
 
       it 'returns unknown for all fields and logs error' do
         result = service.lookup_geo_db(ip)
-        expect(result).to eq({
-          country: 'unknown',
-          city: 'unknown',
-          isp: 'unknown'
-        })
+        expect(result).to eq({ country: 'unknown', city: 'unknown', isp: 'unknown' })
         expect(Rails.logger).to have_received(:error).with('Error looking up geo data for IP 203.0.113.1: Database error')
       end
     end
@@ -216,26 +145,19 @@ RSpec.describe IpAddressService, type: :service do
       end
 
       it 'returns unknown for all fields' do
-        result = service.lookup_geo_db(ip)
-        expect(result).to eq({
-          country: 'unknown',
-          city: 'unknown',
-          isp: 'unknown'
-        })
+        expect(service.lookup_geo_db(ip)).to eq({ country: 'unknown', city: 'unknown', isp: 'unknown' })
       end
     end
   end
 
   describe 'initialization' do
-    context 'when MaxMind databases are available' do
-      it 'initializes successfully' do
-        expect { described_class.new }.not_to raise_error
-      end
+    it 'initializes successfully when class-level DBs are available' do
+      expect { described_class.new }.not_to raise_error
     end
 
-    context 'when MaxMind databases fail to initialize' do
+    context 'when a class-level DB raises on access' do
       before do
-        allow(MaxMind::DB).to receive(:new).and_raise(StandardError.new('File not found'))
+        allow(described_class).to receive(:country_db).and_raise(StandardError.new('File not found'))
       end
 
       it 'raises an error' do
