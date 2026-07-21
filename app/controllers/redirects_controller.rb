@@ -18,7 +18,7 @@ class RedirectsController < ApplicationController
     shortened_url = @shortened_url_service.find_by_short_code(short_code)
 
     if shortened_url
-      ip = request.remote_ip
+      ip = request.headers["CF-Connecting-IP"].presence || request.remote_ip
 
       if @crawler_service.search_engine_crawler?(request.user_agent)
         Rails.logger.info "Crawler access to short_code: #{short_code} by #{@crawler_service.identify_crawler(request.user_agent)}"
