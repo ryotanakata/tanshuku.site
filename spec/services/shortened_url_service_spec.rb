@@ -60,6 +60,40 @@ RSpec.describe ShortenedUrlService, type: :service do
       end
     end
 
+    context 'when URL has uppercase host or trailing slash' do
+      let(:raw_url) { 'https://Example.com/' }
+      let(:normalized_url) { 'https://example.com' }
+
+      before do
+        allow(repository).to receive(:find_by_original_url).with(normalized_url).and_return(nil)
+        allow(repository).to receive(:exists?).with(any_args).and_return(false)
+        allow(SecureRandom).to receive(:alphanumeric).with(6).and_return('abc123')
+      end
+
+      it 'normalizes host to lowercase and strips trailing slash before saving' do
+        allow(repository).to receive(:create).and_return(shortened_url)
+        allow(shortened_url).to receive(:persisted?).and_return(true)
+        service.create_shortened_url(raw_url)
+        expect(repository).to have_received(:create).with(hash_including(original_url: normalized_url))
+      end
+    end
+
+    context 'when RecordNotUnique is raised (race condition)' do
+      let(:existing_shortened_url) { ShortenedUrl.new(original_url: url, short_code: 'RACED1') }
+
+      before do
+        allow(SecureRandom).to receive(:alphanumeric).with(6).and_return('abc123')
+        allow(repository).to receive(:exists?).with('ABC123').and_return(false)
+        allow(repository).to receive(:create).and_raise(ActiveRecord::RecordNotUnique)
+        allow(repository).to receive(:find_by_original_url).with(url).and_return(nil, existing_shortened_url)
+      end
+
+      it 'returns the existing record instead of raising' do
+        result = service.create_shortened_url(url)
+        expect(result).to eq(existing_shortened_url)
+      end
+    end
+
     context 'when creation fails' do
       let(:invalid_shortened_url) do
         ShortenedUrl.new(
