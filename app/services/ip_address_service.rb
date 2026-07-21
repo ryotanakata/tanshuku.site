@@ -44,8 +44,11 @@ class IpAddressService
 
     begin
       result = @maxmind_country.get(ip)
-      Rails.logger.info "IP: #{ip}, Country: #{result&.dig('country', 'iso_code')}"
-      result&.dig("country", "iso_code") != "JP"
+      country_code = result&.dig("country", "iso_code")
+      Rails.logger.info "IP: #{ip}, Country: #{country_code}"
+      return false if country_code.nil?
+
+      country_code != "JP"
     rescue => e
       Rails.logger.error "Error checking overseas IP #{ip}: #{e.message}"
       true

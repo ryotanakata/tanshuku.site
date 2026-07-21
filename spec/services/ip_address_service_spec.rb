@@ -76,8 +76,8 @@ RSpec.describe IpAddressService, type: :service do
         allow(mock_country_db).to receive(:get).with('1.1.1.1').and_return(nil)
       end
 
-      it 'returns true for nil result' do
-        expect(service.overseas_ip?('1.1.1.1')).to be true
+      it 'returns false for nil result (private/unknown IPs are treated as domestic)' do
+        expect(service.overseas_ip?('1.1.1.1')).to be false
       end
     end
   end
