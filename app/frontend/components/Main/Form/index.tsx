@@ -85,9 +85,9 @@ const Form = () => {
           </div>
           <div className={styles.error}>
             {errors.url && (
-              <span id="url-error" role="alert">
+              <p id="url-error" role="alert">
                 {errors.url.message}
-              </span>
+              </p>
             )}
           </div>
           <div className={styles.output}>{renderOutput()}</div>
