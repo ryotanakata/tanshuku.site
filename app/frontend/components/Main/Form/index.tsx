@@ -63,6 +63,8 @@ const Form = () => {
               id="url"
               type="url"
               placeholder="https://example.com/long....."
+              aria-label="短縮したいURL"
+              aria-describedby={errors.url ? "url-error" : undefined}
               aria-invalid={errors.url ? "true" : "false"}
               disabled={isSubmitting || loading}
               autoFocus={true}
@@ -82,7 +84,11 @@ const Form = () => {
             </div>
           </div>
           <div className={styles.error}>
-            {errors.url && <p>{errors.url.message}</p>}
+            {errors.url && (
+              <span id="url-error" role="alert">
+                {errors.url.message}
+              </span>
+            )}
           </div>
           <div className={styles.output}>{renderOutput()}</div>
           <div className={styles.submit}>

@@ -1,5 +1,4 @@
 import axios from "axios";
-import { EXTERNAL_API_ENDPOINTS } from "@/constants/externalApiEndpoints";
 
 const apiClient = axios.create();
 
