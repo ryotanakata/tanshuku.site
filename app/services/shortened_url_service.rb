@@ -4,7 +4,7 @@ class ShortenedUrlService
   end
 
   def create_shortened_url(url)
-    url = url.chomp("/") if url.end_with?("/")
+    url = normalize_url(url)
     existing_url = @shortened_url_repository.find_by_original_url(url)
     return existing_url if existing_url
 
@@ -19,6 +19,8 @@ class ShortenedUrlService
     end
 
     shortened_url
+  rescue ActiveRecord::RecordNotUnique
+    @shortened_url_repository.find_by_original_url(url)
   end
 
   def find_by_short_code(code)
@@ -33,6 +35,14 @@ class ShortenedUrlService
   end
 
   private
+
+  def normalize_url(url)
+    uri = URI.parse(url)
+    uri.host = uri.host&.downcase
+    uri.to_s.chomp("/")
+  rescue URI::InvalidURIError
+    url.chomp("/")
+  end
 
   def generate_short_code
     loop do

@@ -68,6 +68,26 @@ RSpec.describe CrawlerService, type: :service do
         ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
         expect(service.social_media_crawler?(ua)).to be false
       end
+
+      it 'does not misidentify LINE app as a crawler' do
+        ua = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) Line/13.20.0'
+        expect(service.social_media_crawler?(ua)).to be false
+      end
+
+      it 'does not misidentify Instagram app as a crawler' do
+        ua = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) Instagram 300.0.0.22'
+        expect(service.social_media_crawler?(ua)).to be false
+      end
+
+      it 'does not misidentify YouTube app as a crawler' do
+        ua = 'Mozilla/5.0 (Linux; Android 14) com.google.android.youtube/19.0'
+        expect(service.social_media_crawler?(ua)).to be false
+      end
+
+      it 'does not misidentify Amazon app as a crawler' do
+        ua = 'Mozilla/5.0 (Linux; Android 14) com.amazon.mShop.android.shopping/24.0'
+        expect(service.social_media_crawler?(ua)).to be false
+      end
     end
   end
 

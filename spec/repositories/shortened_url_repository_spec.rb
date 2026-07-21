@@ -47,6 +47,38 @@ RSpec.describe ShortenedUrlRepository, type: :repository do
       result = repository.find_by_short_code('XYZ789')
       expect(result).to be_nil
     end
+
+    context 'when the record is soft-deleted' do
+      let!(:deleted_url) do
+        ShortenedUrl.create!(
+          original_url: 'https://deleted.example.com',
+          short_code: 'DEL123',
+          deleted_at: Time.current
+        )
+      end
+
+      it 'returns nil for a soft-deleted short code' do
+        expect(repository.find_by_short_code('DEL123')).to be_nil
+      end
+    end
+  end
+
+  describe '#find_by_id' do
+    let!(:shortened_url) do
+      ShortenedUrl.create!(
+        original_url: 'https://example.com',
+        short_code: 'ABC123'
+      )
+    end
+
+    it 'finds shortened URL by id' do
+      result = repository.find_by_id(shortened_url.id)
+      expect(result).to eq(shortened_url)
+    end
+
+    it 'returns nil for non-existent id' do
+      expect(repository.find_by_id(0)).to be_nil
+    end
   end
 
   describe '#find_by_original_url' do
@@ -60,6 +92,20 @@ RSpec.describe ShortenedUrlRepository, type: :repository do
     it 'finds shortened URL by original URL' do
       result = repository.find_by_original_url('https://example.com')
       expect(result).to eq(shortened_url)
+    end
+
+    context 'when the record is soft-deleted' do
+      let!(:deleted_url) do
+        ShortenedUrl.create!(
+          original_url: 'https://deleted.example.com',
+          short_code: 'DEL456',
+          deleted_at: Time.current
+        )
+      end
+
+      it 'returns nil for a soft-deleted original URL' do
+        expect(repository.find_by_original_url('https://deleted.example.com')).to be_nil
+      end
     end
   end
 

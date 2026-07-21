@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git push *)",
+      "Bash(git remote *)",
+      "Bash(bundle install *)",
+      "Bash(bundle exec rails *)",
+      "Bash(bundle exec rspec *)",
+      "Bash(bundle exec brakeman *)",
+      "Bash(npm install *)",
+      "Bash(npx vite *)",
+      "Bash(bin/rails *)",
+      "Bash(bin/vite *)",
+      "Bash(docker-compose ps *)",
+      "Bash(docker-compose up *)",
+      "Bash(docker-compose restart *)",
+      "Bash(docker compose *)",
+      "Bash(curl -s http://localhost:3000*)",
+      "Bash(grep -v \"^$\")",
+      "Bash(xargs ls -la)"
+    ]
+  }
+}

@@ -6,11 +6,15 @@ class ShortenedUrlRepository
   end
 
   def find_by_short_code(short_code)
-    ShortenedUrl.find_by(short_code: short_code.upcase)
+    ShortenedUrl.where(deleted_at: nil).find_by(short_code: short_code.upcase)
+  end
+
+  def find_by_id(id)
+    ShortenedUrl.find_by(id: id)
   end
 
   def find_by_original_url(original_url)
-    ShortenedUrl.find_by(original_url: original_url)
+    ShortenedUrl.where(deleted_at: nil).find_by(original_url: original_url)
   end
 
   def exists?(short_code)
