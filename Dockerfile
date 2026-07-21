@@ -13,7 +13,7 @@ FROM base AS build
 # 必要なパッケージをインストール
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
-    build-essential curl git libpq-dev libvips pkg-config python-is-python3
+    build-essential curl git libpq-dev libvips pkg-config python-is-python3 libyaml-dev
 
 # Node.js インストール
 ARG NODE_VERSION=20.11.0
