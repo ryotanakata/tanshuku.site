@@ -2,11 +2,13 @@ class RedirectsController < ApplicationController
   def initialize(
     shortened_url_service: ShortenedUrlService.new,
     log_redirect_job: LogRedirectJob,
+    ip_address_service: IpAddressService.new,
     crawler_service: CrawlerService.new
   )
     super()
     @shortened_url_service = shortened_url_service
     @log_redirect_job = log_redirect_job
+    @ip_address_service = ip_address_service
     @crawler_service = crawler_service
   end
 
@@ -20,6 +22,13 @@ class RedirectsController < ApplicationController
 
       if @crawler_service.search_engine_crawler?(request.user_agent)
         Rails.logger.info "Crawler access to short_code: #{short_code} by #{@crawler_service.identify_crawler(request.user_agent)}"
+      end
+
+      if @ip_address_service.overseas_ip?(ip) &&
+         !@crawler_service.search_engine_crawler?(request.user_agent) &&
+         !@crawler_service.social_media_crawler?(request.user_agent)
+        render file: Rails.root.join("public/403.html"), status: :forbidden, layout: false
+        return
       end
 
       @log_redirect_job.perform_later(
