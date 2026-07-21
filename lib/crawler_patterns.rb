@@ -79,29 +79,17 @@ module CrawlerPatterns
   }.freeze
 
   SNS_PATTERNS = [
-    "line",
-    "twitterbot",
     "facebookexternalhit",
+    "facebookcatalog",
+    "twitterbot",
     "linkedinbot",
     "slackbot",
     "discordbot",
     "whatsapp",
     "telegrambot",
-    "instagram",
     "mastodon",
     "misskey",
-    "note",
     "hatena",
-    "pinterest",
-    "tiktok",
-    "youtube",
-    "amazon",
-    "rakuten",
-    "yahoo",
-    "naver",
-    "kakao",
-    "wechat",
-    "qq",
-    "weibo"
+    "pinterest"
   ].freeze
 end
