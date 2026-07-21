@@ -1,15 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe LogRedirectJob, type: :job do
-  let(:redirect_log_service)      { instance_double(RedirectLogService) }
-  let(:shortened_url_repository)  { instance_double(ShortenedUrlRepository) }
-  let(:job) do
-    described_class.new(
-      redirect_log_service: redirect_log_service,
-      shortened_url_repository: shortened_url_repository
-    )
-  end
+  let(:redirect_log_service)     { instance_double(RedirectLogService) }
+  let(:shortened_url_repository) { instance_double(ShortenedUrlRepository) }
   let(:shortened_url) { ShortenedUrl.new(id: 1, original_url: 'https://example.com', short_code: 'ABC123') }
+
+  before do
+    allow(RedirectLogService).to receive(:new).and_return(redirect_log_service)
+    allow(ShortenedUrlRepository).to receive(:new).and_return(shortened_url_repository)
+  end
 
   describe '#perform' do
     let(:args) do
@@ -28,7 +27,7 @@ RSpec.describe LogRedirectJob, type: :job do
       end
 
       it 'delegates to RedirectLogService' do
-        job.perform(**args)
+        described_class.new.perform(**args)
         expect(redirect_log_service).to have_received(:create_redirect_log).with(
           shortened_url,
           ip_address: '203.0.113.1',
@@ -44,8 +43,8 @@ RSpec.describe LogRedirectJob, type: :job do
       end
 
       it 'does nothing without raising' do
-        expect { job.perform(**args) }.not_to raise_error
         expect(redirect_log_service).not_to receive(:create_redirect_log)
+        expect { described_class.new.perform(**args) }.not_to raise_error
       end
     end
   end
