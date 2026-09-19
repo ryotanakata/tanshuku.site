@@ -201,3 +201,18 @@ config.headers["X-CSRF-TOKEN"] = token;
 - Railway（デプロイ）
 - rack-attack（レートリミット）
 - maxmind-db（IP ジオロケーション）
+
+## 自律開発ループ（Notion連携）
+
+Notion をタスク管理に使った自律開発ループを導入している。開発フローは次のとおり:
+
+```
+Notion起票（背景・要求・受け入れ条件AC） → ルーチン実行（実装・自己レビュー・PR作成） → 人間レビュー → マージ
+```
+
+- **Notion 参照元**: `.claude/notion.json`（DB ID・Statusプロパティの値・base ブランチ・テストコマンドを集約。値をコード側に直書きしない）
+- **ルーチンのプロンプト**: `.claude/routine-prompt.md`（クラウド側ルーチンの設定にはこのファイルの内容をそのまま使う。プロンプトをリポジトリ内で管理することで、コードと一緒にレビューされずに実態とドリフトするのを防ぐ）
+- **コミット前の規約レビュー**: `.claude/skills/rules-review/SKILL.md`（`.claude/agents/rules-reviewer.md` を並列起動して照合）。`git commit` は `.claude/hooks/review-gate.sh` のゲート（`.claude/settings.json` の `PreToolUse` hook）を通過しないとブロックされる
+- **出荷（レビュー→意味単位コミット→PR作成）**: `.claude/skills/ship/SKILL.md`
+- **PRテンプレート**: `.github/pull_request_template.md`。`## 受け入れ条件（AC）` の見出しは表記を変えない（AC の箇条書きを差分と照合する仕組みが前提のため）
+- ルーチンが作った PR は、人間がレビュー・マージするまで Notion 上のタスクを完了にしない

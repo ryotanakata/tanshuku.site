@@ -1,0 +1,18 @@
+{
+  "_comment": "Notion ID の正式参照元。ルーチン・起票スキルが参照する",
+  "database_id": "58c6d207-b4f6-4e1f-a5e5-5d6d78e7956d",
+  "data_source_id": "d02f85da-5c35-4c0b-aca4-992720a721fe",
+  "status_property": "Status",
+  "status_values": {
+    "draft": "未起票",
+    "queue": "AI開発キュー",
+    "review": "AIレビュー待ち",
+    "reviewing": "レビュー中",
+    "done": "完了"
+  },
+  "id_prefix": "TNSK",
+  "id_property_mcp": "userDefined:ID",
+  "repository": "ryotanakata/tanshuku.site",
+  "base_branch": "main",
+  "test_command": "bundle exec rspec && npm run typecheck"
+}
