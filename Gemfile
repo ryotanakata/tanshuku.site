@@ -13,7 +13,7 @@ gem "jbuilder"
 # SCSS processing
 gem "sassc-rails"
 # Vite for frontend assets
-gem "vite_rails", "~> 3.0"
+gem "vite_rails", "~> 3.11"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
